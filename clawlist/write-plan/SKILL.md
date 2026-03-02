@@ -10,7 +10,6 @@ description: "MUST use after brainstorming and before executing. Creates detaile
 Transform validated designs into detailed, actionable implementation plans with checkpoints.
 
 Every plan includes:
-
 - Bite-sized tasks (2-5 minutes each)
 - Checkpoints with verification criteria
 - Estimated time for each section
@@ -26,19 +25,16 @@ Every plan includes:
 **Estimated Total Time:** X minutes
 
 ## Checkpoint 1: [Milestone Name]
-
 - [ ] Task 1: [Description] (~X min)
   - **Action:** [Specific action]
   - **Verify:** [How to confirm done]
 - [ ] Task 2: [Description] (~X min)
-      ...
+  ...
 
 ## Checkpoint 2: [Milestone Name]
-
 ...
 
 ## Verification Criteria
-
 - [ ] All checkpoints complete
 - [ ] Quality standards met
 - [ ] User approval obtained
@@ -64,13 +60,11 @@ After saving the plan, offer execution choice:
 **Which approach?"**
 
 **If Single-Agent chosen:**
-
 - Stay in this session
 - Execute tasks sequentially
 - Report progress at each checkpoint
 
 **If Dispatch Multiple Agents chosen:**
-
 - Use dispatch-multiple-agents skill
 - Spawn subagents for parallel work
 - Integrate results

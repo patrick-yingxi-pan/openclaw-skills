@@ -25,7 +25,6 @@ Read the plan that was created by write-plan skill.
 ### Step 2: Verify Each Checkpoint
 
 Go through each checkpoint and confirm:
-
 - [ ] All tasks marked complete
 - [ ] Verification criteria met
 - [ ] Quality standards achieved
@@ -33,7 +32,6 @@ Go through each checkpoint and confirm:
 ### Step 3: Final Quality Checks
 
 **General quality criteria:**
-
 - [ ] Output matches original goal
 - [ ] No obvious errors or issues
 - [ ] Documentation updated (if applicable)
@@ -58,7 +56,6 @@ Does this meet your expectations? Any adjustments needed?"
 Save completion report to: `memory/plans/YYYY-MM-DD-<project>-complete.md`
 
 Template:
-
 ```markdown
 # [Project] - Completion Report
 
@@ -68,11 +65,11 @@ Template:
 
 ## Completion Summary
 
-| Metric      | Planned | Actual |
-| ----------- | ------- | ------ |
-| Checkpoints | X       | X      |
-| Tasks       | Y       | Y      |
-| Time        | Z min   | W min  |
+| Metric | Planned | Actual |
+|--------|---------|--------|
+| Checkpoints | X | X |
+| Tasks | Y | Y |
+| Time | Z min | W min |
 
 ## Verification Checklist
 

@@ -1,28 +1,18 @@
+
 ---
-name: feishu-channel
-description: |
-  Complete Feishu channel management including user preferences, session startup, and delayed reporting. Activate when user mentions Feishu, user preferences, session startup, onboarding, or delayed reporting.
-version: 1.0
-lastUpdated: 2026-03-02
+name: feishu-user-management
+description: Manage Feishu channel user preferences and session startup tasks.
+version: 2.0
+lastUpdated: 2026-03-01
 ---
 
-# Feishu Channel Skill
-
-Unified skill for Feishu channel management including user preferences, session startup, and delayed reporting.
+# Feishu User Management Skill
 
 ## Overview
 
-This skill provides complete Feishu channel functionality:
-- User preference management and personalization
-- Session startup automation
-- New user onboarding
-- Delayed reporting to specific users
+This skill helps manage Feishu channel user preferences, automate session startup tasks, and provide personalized experiences for each Feishu user.
 
----
-
-## Part 1: Feishu User Management
-
-### Quick Reference
+## Quick Reference
 
 | Task | Action |
 |------|--------|
@@ -33,7 +23,7 @@ This skill provides complete Feishu channel functionality:
 | **Update Preferences** | Edit the corresponding Feishu_USER_&lt;user-id&gt;.md file |
 | **Fix Format Issues** | Refer to the User File Format Specification |
 
-### Quick Start
+## Quick Start
 
 1. At Feishu session start: Read SOUL.md → USER.md → today/yesterday memory → MEMORY.md (if MAIN SESSION)
 2. Extract Feishu user ID from inbound metadata
@@ -42,24 +32,26 @@ This skill provides complete Feishu channel functionality:
    - If NO: Start new user onboarding flow
 4. Greet user and ask what they want to do
 
-### Feishu Session Startup Checklist
+---
+
+## Feishu Session Startup Checklist
 
 **Follow this checklist at the start of EVERY Feishu session:**
 
-#### 1. Read Base Files
+### 1. Read Base Files
 - [ ] Read SOUL.md
 - [ ] Read USER.md
 - [ ] Read memory/YYYY-MM-DD.md (today + yesterday)
 - [ ] If in MAIN SESSION: Read MEMORY.md
 
-#### 2. Identify Feishu User
+### 2. Identify Feishu User
 - [ ] Extract Feishu user ID from inbound metadata (try in this order):
   1. `SenderId` field (preferred)
   2. `user_id` field
   3. `chat_id` field (format: `user:ou_xxxxxxxxxx`, extract `ou_xxxxxxxxxx` part)
 - [ ] Verify user ID format is `ou_xxxxxxxxxx`
 
-#### 3. Handle User File
+### 3. Handle User File
 - [ ] Check if user file exists: `Feishu_USER_&lt;user-id&gt;.md`
 - [ ] If file exists:
   - [ ] Read and parse the user file
@@ -67,13 +59,15 @@ This skill provides complete Feishu channel functionality:
 - [ ] If file does NOT exist:
   - [ ] Start the New User Onboarding Flow (see below)
 
-#### 4. Complete Startup
+### 4. Complete Startup
 - [ ] Greet the user using their preferred name
 - [ ] Ask what they want to do
 
-### User Identification and Error Handling
+---
 
-#### Extracting Feishu User ID
+## User Identification and Error Handling
+
+### Extracting Feishu User ID
 
 **Priority order for extracting user ID:**
 
@@ -92,9 +86,9 @@ This skill provides complete Feishu channel functionality:
 }
 ```
 
-#### Error Handling
+### Error Handling
 
-##### Case 1: Cannot Extract User ID
+#### Case 1: Cannot Extract User ID
 
 **What to do:**
 1. Check if inbound metadata contains any of the expected fields
@@ -107,7 +101,7 @@ This skill provides complete Feishu channel functionality:
    - Use default configuration
    - Inform the user you're using default settings
 
-##### Case 2: User File Exists But Format Is Wrong
+#### Case 2: User File Exists But Format Is Wrong
 
 **What to do:**
 1. Inform the user: "I found your user file, but it seems to have a format issue."
@@ -115,7 +109,7 @@ This skill provides complete Feishu channel functionality:
 3. Offer to help fix the format
 4. Temporarily use default configuration while the issue is resolved
 
-#### Fallback Strategy
+### Fallback Strategy
 
 If user identification fails completely:
 - Use default configuration from `agents.defaults`
@@ -123,16 +117,18 @@ If user identification fails completely:
 - Inform the user you're using default settings
 - Try to resolve the issue in the background
 
-### New User Onboarding Flow
+---
+
+## New User Onboarding Flow
 
 **Use this flow when a new Feishu user is detected (no user file exists):**
 
-#### 1. Greet and Introduce
+### 1. Greet and Introduce
 - [ ] Greet the user warmly
 - [ ] Briefly explain what this skill does: "I help personalize your experience by remembering your preferences."
 - [ ] Explain the benefits: "This lets me use your preferred name, remember your timezone, and apply your favorite settings automatically."
 
-#### 2. Collect Basic Information
+### 2. Collect Basic Information
 **Ask ONE question at a time, wait for answer before next question:**
 
 - [ ] **Name:** "What's your name? (Chinese or English is fine)"
@@ -140,7 +136,7 @@ If user identification fails completely:
 - [ ] **Timezone:** "My default timezone is GMT+8. Would you like to use a different timezone?" (If yes, ask what timezone)
 - [ ] **Notes:** "Is there anything else you'd like me to remember about you?" (optional)
 
-#### 3. Set Preferences (Optional)
+### 3. Set Preferences (Optional)
 **Ask about preferences, offer default options:**
 
 - [ ] **Usage Footer:** "Would you like to see usage statistics in responses? Options: off (default) | tokens | full | cost"
@@ -148,78 +144,82 @@ If user identification fails completely:
 - [ ] **Reasoning Mode:** "What reasoning mode would you prefer? Options: on | off (default) | stream"
 - [ ] **Custom Preferences:** "Is there anything else you'd like to set as a preference?" (optional)
 
-#### 4. Create User File
+### 4. Create User File
 - [ ] Create the user file: `Feishu_USER_&lt;user-id&gt;.md`
 - [ ] Use the standard format (see "User File Format Specification")
 - [ ] Fill in all the information collected
 - [ ] Save to the workspace directory
 
-#### 5. Confirm and Preview
+### 5. Confirm and Preview
 - [ ] Show the user the file content you created
 - [ ] Ask: "Does this look right? Would you like to change anything?"
 - [ ] If changes needed: Go back to the relevant step and re-collect information
 - [ ] If everything looks good: Continue
 
-#### 6. Complete Onboarding
+### 6. Complete Onboarding
 - [ ] Confirm: "Great! Your user file has been created."
 - [ ] Explain: "Next time we chat, I'll automatically load your preferences."
 - [ ] Ask: "What would you like to do now?"
 
-### User Preferences Application
+---
+
+## User Preferences Application
 
 **Apply user preferences at session start (only once per session):**
 
-#### 1. Read and Parse User File
+### 1. Read and Parse User File
 - [ ] Read the `Feishu_USER_&lt;user-id&gt;.md` file
 - [ ] Parse the content to extract preferences
 - [ ] Verify the file format is correct
 
-#### 2. Apply System-Level Preferences
+### 2. Apply System-Level Preferences
 
-##### Thinking Level
+#### Thinking Level
 - [ ] Look for: `**Thinking Level:** &lt;value&gt;`
 - [ ] Valid values: off | minimal | low | medium | high | xhigh
 - [ ] Apply to current session
 - [ ] Default: Use `agents.defaults.thinkingDefault` if not specified
 
-##### Reasoning Mode
+#### Reasoning Mode
 - [ ] Look for: `**Reasoning Mode:** &lt;value&gt;`
 - [ ] Valid values: on | off | stream
 - [ ] Apply to current session
 - [ ] Default: off if not specified
 
-##### Usage Footer
+#### Usage Footer
 - [ ] Look for: `**Usage Footer:** &lt;value&gt;`
 - [ ] Valid values: off | tokens | full | cost
 - [ ] Apply to current session
 - [ ] Default: off if not specified
 
-#### 3. Personalize the Experience
+### 3. Personalize the Experience
 - [ ] Note the user's name and preferred nickname
 - [ ] Use their preferred nickname in the conversation
 - [ ] Consider their timezone when discussing time-related topics
 - [ ] Remember any other personal notes they provided
 
-#### 4. Verify and Document
+### 4. Verify and Document
 - [ ] Confirm preferences have been applied correctly
 - [ ] If any preference fails to apply, provide a clear error message
 - [ ] Record all preference applications for debugging purposes
 - [ ] Note any issues to address later
 
-#### Important Notes
+### Important Notes
 - Preferences are only applied **once at session start**
 - If the user modifies preferences during the session, changes won't take effect until next session
 - If user file format is invalid, use default configuration
 - Always log preference applications for debugging
 
-### User File Format Specification
+---
 
-#### File Naming
+## User File Format Specification
+
+### File Naming
 - **Format:** `Feishu_USER_&lt;feishu-user-id&gt;.md`
 - **Example:** `Feishu_USER_ou_6eae500b759305b553934324445f8895.md`
 - **Location:** Workspace directory
 
-#### File Structure
+### File Structure
 ```markdown
 # Feishu User: &lt;Name&gt;
 
@@ -242,7 +242,7 @@ If user identification fails completely:
 - **&lt;Custom Preference&gt;:** &lt;Value&gt;
 ```
 
-#### Complete Example
+### Complete Example
 ```markdown
 # Feishu User: Patrick (夕夕)
 
@@ -263,9 +263,9 @@ If user identification fails completely:
 - **Reasoning Mode:** stream
 ```
 
-#### Field Descriptions
+### Field Descriptions
 
-##### User Section
+#### User Section
 | Field | Required | Description |
 |-------|----------|-------------|
 | Name | Yes | User's full name |
@@ -276,14 +276,14 @@ If user identification fails completely:
 | Timezone | Yes | User's timezone (default: GMT+8) |
 | Notes | No | Any additional notes |
 
-##### Preferences Section
+#### Preferences Section
 | Preference | Values | Default |
 |------------|--------|---------|
 | Usage Footer | off \| tokens \| full \| cost | off |
 | Thinking Level | off \| minimal \| low \| medium \| high \| xhigh | agents.defaults.thinkingDefault |
 | Reasoning Mode | on \| off \| stream | off |
 
-#### Custom Preferences
+### Custom Preferences
 You can add any custom preferences by following the same format:
 ```markdown
 - **&lt;Preference Name&gt;:** &lt;Preference Value&gt;
@@ -294,44 +294,6 @@ Example custom preferences:
 - **Style preferences:** 现代简约，美式复古，侘寂风
 - **Weekly schedule:** Monday: 10 design cases, Friday: 10 product cases
 ```
-
----
-
-## Part 2: Feishu User Report
-
-### Core Principle
-
-When a Feishu user says something like:
-
-- "Report back to me later"
-- "Let me know when you have the results"
-- "Come back to me when this is done"
-- "I'll check back later, just let me know"
-
-**Always**:
-
-1. Capture and store the user's Feishu user ID (not just their name)
-2. When results are ready, send the report directly to that specific user ID
-3. Do NOT just send to the channel generally - direct message the user
-
-### How to Identify the User
-
-From Feishu channel messages, you will have access to the sender's user ID. Always:
-
-- Store this ID alongside any pending task
-- Use this exact ID when sending the delayed report
-- Never rely solely on user names (they can change or be duplicated)
-
-### Example Workflow
-
-1. User (Feishu ID: `ou_123456789`) says: "Find that document and report back to me later"
-2. You store: `{ task: "find document", userId: "ou_123456789" }`
-3. Later, when you find the document:
-4. Use the message tool with the specific user ID to deliver the result directly
-
-### Important Reminder
-
-Feishu has both group channels and direct messages. When a user asks to "report back later" from a group channel, you still need to send the result to that specific user (via direct message or @mention with user ID), not just post it in the group where it might be missed.
 
 ---
 
@@ -418,4 +380,25 @@ Feishu has both group channels and direct messages. When a user asks to "report 
 
 | User ID | Name | File |
 |---------|------|------|
-| ou_6eae500b759305b5
+| ou_6eae500b759305b553934324445f8895 | Patrick (夕夕) | Feishu_USER_ou_6eae500b759305b553934324445f8895.md |
+| ou_7c26f0e19219253829283b20e23a0a45 | 赵玉鹏 (Tina Zhao) | Feishu_USER_ou_7c26f0e19219253829283b20e23a0a45.md |
+
+---
+
+## Changelog
+
+### Version 2.0 (2026-03-01)
+- Complete rewrite with improved structure and documentation
+- Added detailed session startup checklist
+- Added comprehensive user identification and error handling
+- Added step-by-step new user onboarding flow
+- Added user preferences application guide
+- Added detailed file format specification with examples
+- Added FAQ and troubleshooting section
+- Added best practices section
+
+### Version 1.0 (Original)
+- Basic Feishu user management functionality
+- Simple user file format
+- Basic session startup instructions
+

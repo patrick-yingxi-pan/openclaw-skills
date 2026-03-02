@@ -10,20 +10,20 @@ Log learnings and errors to markdown files for continuous improvement. Coding ag
 
 ## Quick Reference
 
-| Situation                          | Action                                                                                             |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Command/operation fails            | Log to `.learnings/ERRORS.md`                                                                      |
-| User corrects you                  | Log to `.learnings/LEARNINGS.md` with category `correction`                                        |
-| User wants missing feature         | Log to `.learnings/FEATURE_REQUESTS.md`                                                            |
-| API/external tool fails            | Log to `.learnings/ERRORS.md` with integration details                                             |
-| Knowledge was outdated             | Log to `.learnings/LEARNINGS.md` with category `knowledge_gap`                                     |
-| Found better approach              | Log to `.learnings/LEARNINGS.md` with category `best_practice`                                     |
+| Situation | Action |
+|-----------|--------|
+| Command/operation fails | Log to `.learnings/ERRORS.md` |
+| User corrects you | Log to `.learnings/LEARNINGS.md` with category `correction` |
+| User wants missing feature | Log to `.learnings/FEATURE_REQUESTS.md` |
+| API/external tool fails | Log to `.learnings/ERRORS.md` with integration details |
+| Knowledge was outdated | Log to `.learnings/LEARNINGS.md` with category `knowledge_gap` |
+| Found better approach | Log to `.learnings/LEARNINGS.md` with category `best_practice` |
 | Simplify/Harden recurring patterns | Log/update `.learnings/LEARNINGS.md` with `Source: simplify-and-harden` and a stable `Pattern-Key` |
-| Similar to existing entry          | Link with `**See Also**`, consider priority bump                                                   |
-| Broadly applicable learning        | Promote to `CLAUDE.md`, `AGENTS.md`, and/or `.github/copilot-instructions.md`                      |
-| Workflow improvements              | Promote to `AGENTS.md` (OpenClaw workspace)                                                        |
-| Tool gotchas                       | Promote to `TOOLS.md` (OpenClaw workspace)                                                         |
-| Behavioral patterns                | Promote to `SOUL.md` (OpenClaw workspace)                                                          |
+| Similar to existing entry | Link with `**See Also**`, consider priority bump |
+| Broadly applicable learning | Promote to `CLAUDE.md`, `AGENTS.md`, and/or `.github/copilot-instructions.md` |
+| Workflow improvements | Promote to `AGENTS.md` (OpenClaw workspace) |
+| Tool gotchas | Promote to `TOOLS.md` (OpenClaw workspace) |
+| Behavioral patterns | Promote to `SOUL.md` (OpenClaw workspace) |
 
 ## OpenClaw Setup (Recommended)
 
@@ -32,13 +32,11 @@ OpenClaw is the primary platform for this skill. It uses workspace-based prompt 
 ### Installation
 
 **Via ClawdHub (recommended):**
-
 ```bash
 clawdhub install self-improving-agent
 ```
 
 **Manual:**
-
 ```bash
 git clone https://github.com/peterskoett/self-improving-agent.git ~/.openclaw/skills/self-improving-agent
 ```
@@ -70,7 +68,6 @@ mkdir -p ~/.openclaw/workspace/.learnings
 ```
 
 Then create the log files (or copy from `assets/`):
-
 - `LEARNINGS.md` — corrections, knowledge gaps, best practices
 - `ERRORS.md` — command failures, exceptions
 - `FEATURE_REQUESTS.md` — user-requested capabilities
@@ -79,18 +76,18 @@ Then create the log files (or copy from `assets/`):
 
 When learnings prove broadly applicable, promote them to workspace files:
 
-| Learning Type         | Promote To  | Example                                |
-| --------------------- | ----------- | -------------------------------------- |
-| Behavioral patterns   | `SOUL.md`   | "Be concise, avoid disclaimers"        |
-| Workflow improvements | `AGENTS.md` | "Spawn sub-agents for long tasks"      |
-| Tool gotchas          | `TOOLS.md`  | "Git push needs auth configured first" |
+| Learning Type | Promote To | Example |
+|---------------|------------|---------|
+| Behavioral patterns | `SOUL.md` | "Be concise, avoid disclaimers" |
+| Workflow improvements | `AGENTS.md` | "Spawn sub-agents for long tasks" |
+| Tool gotchas | `TOOLS.md` | "Git push needs auth configured first" |
 
 ### Inter-Session Communication
 
 OpenClaw provides tools to share learnings across sessions:
 
 - **sessions_list** — View active/recent sessions
-- **sessions_history** — Read another session's transcript
+- **sessions_history** — Read another session's transcript  
 - **sessions_send** — Send a learning to another session
 - **sessions_spawn** — Spawn a sub-agent for background work
 
@@ -125,7 +122,6 @@ Copy templates from `assets/` or create files with headers.
 #### Self-Improvement Workflow
 
 When errors or corrections occur:
-
 1. Log to `.learnings/ERRORS.md`, `LEARNINGS.md`, or `FEATURE_REQUESTS.md`
 2. Review and promote broadly applicable learnings to:
    - `CLAUDE.md` - project facts and conventions
@@ -147,19 +143,15 @@ Append to `.learnings/LEARNINGS.md`:
 **Area**: frontend | backend | infra | tests | docs | config
 
 ### Summary
-
 One-line description of what was learned
 
 ### Details
-
 Full context: what happened, what was wrong, what's correct
 
 ### Suggested Action
-
 Specific fix or improvement to make
 
 ### Metadata
-
 - Source: conversation | error | user_feedback
 - Related Files: path/to/file.ext
 - Tags: tag1, tag2
@@ -185,14 +177,11 @@ Append to `.learnings/ERRORS.md`:
 **Area**: frontend | backend | infra | tests | docs | config
 
 ### Summary
-
 Brief description of what failed
 
 ### Error
 ```
-
 Actual error message or output
-
 ```
 
 ### Context
@@ -224,23 +213,18 @@ Append to `.learnings/FEATURE_REQUESTS.md`:
 **Area**: frontend | backend | infra | tests | docs | config
 
 ### Requested Capability
-
 What the user wanted to do
 
 ### User Context
-
 Why they needed it, what problem they're solving
 
 ### Complexity Estimate
-
 simple | medium | complex
 
 ### Suggested Implementation
-
 How this could be built, what it might extend
 
 ### Metadata
-
 - Frequency: first_time | recurring
 - Related Features: existing_feature_name
 
@@ -250,7 +234,6 @@ How this could be built, what it might extend
 ## ID Generation
 
 Format: `TYPE-YYYYMMDD-XXX`
-
 - TYPE: `LRN` (learning), `ERR` (error), `FEAT` (feature)
 - YYYYMMDD: Current date
 - XXX: Sequential number or random 3 chars (e.g., `001`, `A7B`)
@@ -266,14 +249,12 @@ When an issue is fixed, update the entry:
 
 ```markdown
 ### Resolution
-
 - **Resolved**: 2025-01-16T09:00:00Z
 - **Commit/PR**: abc123 or #42
 - **Notes**: Brief description of what was done
 ```
 
 Other status values:
-
 - `in_progress` - Actively being worked on
 - `wont_fix` - Decided not to address (add reason in Resolution notes)
 - `promoted` - Elevated to CLAUDE.md, AGENTS.md, or .github/copilot-instructions.md
@@ -291,13 +272,13 @@ When a learning is broadly applicable (not a one-off fix), promote it to permane
 
 ### Promotion Targets
 
-| Target                            | What Belongs There                                                          |
-| --------------------------------- | --------------------------------------------------------------------------- |
-| `CLAUDE.md`                       | Project facts, conventions, gotchas for all Claude interactions             |
-| `AGENTS.md`                       | Agent-specific workflows, tool usage patterns, automation rules             |
-| `.github/copilot-instructions.md` | Project context and conventions for GitHub Copilot                          |
-| `SOUL.md`                         | Behavioral guidelines, communication style, principles (OpenClaw workspace) |
-| `TOOLS.md`                        | Tool capabilities, usage patterns, integration gotchas (OpenClaw workspace) |
+| Target | What Belongs There |
+|--------|-------------------|
+| `CLAUDE.md` | Project facts, conventions, gotchas for all Claude interactions |
+| `AGENTS.md` | Agent-specific workflows, tool usage patterns, automation rules |
+| `.github/copilot-instructions.md` | Project context and conventions for GitHub Copilot |
+| `SOUL.md` | Behavioral guidelines, communication style, principles (OpenClaw workspace) |
+| `TOOLS.md` | Tool capabilities, usage patterns, integration gotchas (OpenClaw workspace) |
 
 ### How to Promote
 
@@ -310,28 +291,22 @@ When a learning is broadly applicable (not a one-off fix), promote it to permane
 ### Promotion Examples
 
 **Learning** (verbose):
-
-> Project uses pnpm workspaces. Attempted `npm install` but failed.
+> Project uses pnpm workspaces. Attempted `npm install` but failed. 
 > Lock file is `pnpm-lock.yaml`. Must use `pnpm install`.
 
 **In CLAUDE.md** (concise):
-
 ```markdown
 ## Build & Dependencies
-
 - Package manager: pnpm (not npm) - use `pnpm install`
 ```
 
 **Learning** (verbose):
-
 > When modifying API endpoints, must regenerate TypeScript client.
 > Forgetting this causes type mismatches at runtime.
 
 **In AGENTS.md** (actionable):
-
 ```markdown
 ## After API Changes
-
 1. Regenerate client: `pnpm run generate:api`
 2. Check for type errors: `pnpm tsc --noEmit`
 ```
@@ -377,7 +352,6 @@ Promote recurring patterns into agent context/system prompt files when all are t
 - Occurred within a 30-day window
 
 Promotion targets:
-
 - `CLAUDE.md`
 - `AGENTS.md`
 - `.github/copilot-instructions.md`
@@ -391,14 +365,12 @@ not long incident write-ups.
 Review `.learnings/` at natural breakpoints:
 
 ### When to Review
-
 - Before starting a new major task
 - After completing a feature
 - When working in an area with past learnings
 - Weekly during active development
 
 ### Quick Status Check
-
 ```bash
 # Count pending items
 grep -h "Status\*\*: pending" .learnings/*.md | wc -l
@@ -411,7 +383,6 @@ grep -l "Area\*\*: backend" .learnings/*.md
 ```
 
 ### Review Actions
-
 - Resolve fixed items
 - Promote applicable learnings
 - Link related entries
@@ -422,27 +393,23 @@ grep -l "Area\*\*: backend" .learnings/*.md
 Automatically log when you notice:
 
 **Corrections** (→ learning with `correction` category):
-
 - "No, that's not right..."
 - "Actually, it should be..."
 - "You're wrong about..."
 - "That's outdated..."
 
 **Feature Requests** (→ feature request):
-
 - "Can you also..."
 - "I wish you could..."
 - "Is there a way to..."
 - "Why can't you..."
 
 **Knowledge Gaps** (→ learning with `knowledge_gap` category):
-
 - User provides information you didn't know
 - Documentation you referenced is outdated
 - API behavior differs from your understanding
 
 **Errors** (→ error entry):
-
 - Command returns non-zero exit code
 - Exception or stack trace
 - Unexpected output or behavior
@@ -450,25 +417,25 @@ Automatically log when you notice:
 
 ## Priority Guidelines
 
-| Priority   | When to Use                                                   |
-| ---------- | ------------------------------------------------------------- |
-| `critical` | Blocks core functionality, data loss risk, security issue     |
-| `high`     | Significant impact, affects common workflows, recurring issue |
-| `medium`   | Moderate impact, workaround exists                            |
-| `low`      | Minor inconvenience, edge case, nice-to-have                  |
+| Priority | When to Use |
+|----------|-------------|
+| `critical` | Blocks core functionality, data loss risk, security issue |
+| `high` | Significant impact, affects common workflows, recurring issue |
+| `medium` | Moderate impact, workaround exists |
+| `low` | Minor inconvenience, edge case, nice-to-have |
 
 ## Area Tags
 
 Use to filter learnings by codebase region:
 
-| Area       | Scope                                      |
-| ---------- | ------------------------------------------ |
-| `frontend` | UI, components, client-side code           |
-| `backend`  | API, services, server-side code            |
-| `infra`    | CI/CD, deployment, Docker, cloud           |
-| `tests`    | Test files, testing utilities, coverage    |
-| `docs`     | Documentation, comments, READMEs           |
-| `config`   | Configuration files, environment, settings |
+| Area | Scope |
+|------|-------|
+| `frontend` | UI, components, client-side code |
+| `backend` | API, services, server-side code |
+| `infra` | CI/CD, deployment, Docker, cloud |
+| `tests` | Test files, testing utilities, coverage |
+| `docs` | Documentation, comments, READMEs |
+| `config` | Configuration files, environment, settings |
 
 ## Best Practices
 
@@ -484,7 +451,6 @@ Use to filter learnings by codebase region:
 ## Gitignore Options
 
 **Keep learnings local** (per-developer):
-
 ```gitignore
 .learnings/
 ```
@@ -493,7 +459,6 @@ Use to filter learnings by codebase region:
 Don't add to .gitignore - learnings become shared knowledge.
 
 **Hybrid** (track templates, ignore entries):
-
 ```gitignore
 .learnings/*.md
 !.learnings/.gitkeep
@@ -510,17 +475,13 @@ Create `.claude/settings.json` in your project:
 ```json
 {
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./skills/self-improvement/scripts/activator.sh"
-          }
-        ]
-      }
-    ]
+    "UserPromptSubmit": [{
+      "matcher": "",
+      "hooks": [{
+        "type": "command",
+        "command": "./skills/self-improvement/scripts/activator.sh"
+      }]
+    }]
   }
 }
 ```
@@ -532,38 +493,30 @@ This injects a learning evaluation reminder after each prompt (~50-100 tokens ov
 ```json
 {
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./skills/self-improvement/scripts/activator.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./skills/self-improvement/scripts/error-detector.sh"
-          }
-        ]
-      }
-    ]
+    "UserPromptSubmit": [{
+      "matcher": "",
+      "hooks": [{
+        "type": "command",
+        "command": "./skills/self-improvement/scripts/activator.sh"
+      }]
+    }],
+    "PostToolUse": [{
+      "matcher": "Bash",
+      "hooks": [{
+        "type": "command",
+        "command": "./skills/self-improvement/scripts/error-detector.sh"
+      }]
+    }]
   }
 }
 ```
 
 ### Available Hook Scripts
 
-| Script                      | Hook Type          | Purpose                                   |
-| --------------------------- | ------------------ | ----------------------------------------- |
-| `scripts/activator.sh`      | UserPromptSubmit   | Reminds to evaluate learnings after tasks |
-| `scripts/error-detector.sh` | PostToolUse (Bash) | Triggers on command errors                |
+| Script | Hook Type | Purpose |
+|--------|-----------|---------|
+| `scripts/activator.sh` | UserPromptSubmit | Reminds to evaluate learnings after tasks |
+| `scripts/error-detector.sh` | PostToolUse (Bash) | Triggers on command errors |
 
 See `references/hooks-setup.md` for detailed configuration and troubleshooting.
 
@@ -575,13 +528,13 @@ When a learning is valuable enough to become a reusable skill, extract it using 
 
 A learning qualifies for skill extraction when ANY of these apply:
 
-| Criterion              | Description                                         |
-| ---------------------- | --------------------------------------------------- |
-| **Recurring**          | Has `See Also` links to 2+ similar issues           |
-| **Verified**           | Status is `resolved` with working fix               |
-| **Non-obvious**        | Required actual debugging/investigation to discover |
-| **Broadly applicable** | Not project-specific; useful across codebases       |
-| **User-flagged**       | User says "save this as a skill" or similar         |
+| Criterion | Description |
+|-----------|-------------|
+| **Recurring** | Has `See Also` links to 2+ similar issues |
+| **Verified** | Status is `resolved` with working fix |
+| **Non-obvious** | Required actual debugging/investigation to discover |
+| **Broadly applicable** | Not project-specific; useful across codebases |
+| **User-flagged** | User says "save this as a skill" or similar |
 
 ### Extraction Workflow
 
@@ -611,14 +564,12 @@ If you prefer manual creation:
 Watch for these signals that a learning should become a skill:
 
 **In conversation:**
-
 - "Save this as a skill"
 - "I keep running into this"
 - "This would be useful for other projects"
 - "Remember this pattern"
 
 **In learning entries:**
-
 - Multiple `See Also` links (recurring issue)
 - High priority + resolved status
 - Category: `best_practice` with broad applicability
@@ -659,7 +610,6 @@ This skill works across different AI coding agents with agent-specific activatio
 ## Self-Improvement
 
 After solving non-obvious issues, consider logging to `.learnings/`:
-
 1. Use format from self-improvement skill
 2. Link related entries with See Also
 3. Promote high-value learnings to skills
@@ -692,7 +642,6 @@ For Copilot users, add this to your prompts when relevant:
 > After completing this task, evaluate if any learnings should be logged to `.learnings/` using the self-improvement skill format.
 
 Or use quick prompts:
-
 - "Log this to learnings"
 - "Create a skill from this solution"
 - "Check .learnings/ for related issues"

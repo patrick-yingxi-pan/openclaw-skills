@@ -10,7 +10,6 @@ Set up a new AI team member through a guided conversation. Not a config generato
 ## When to Use
 
 User says something like:
-
 - "I want to hire a new agent"
 - "I need help with X" (where X implies a new agent role)
 - "Let's add someone to the team"
@@ -22,23 +21,18 @@ User says something like:
 
 **Q1: "What do you need help with?"**
 Let them describe the problem, not a job title. "I'm drowning in code reviews" beats "I need a code reviewer."
-
 - Listen for: scope, implied autonomy level, implied tools needed
 
 **Q2: "What's their personality? Formal, casual, blunt, cautious, creative?"**
 Or frame it as: "If this were a human colleague, what would they be like?"
-
 - Listen for: communication style, vibe, how they interact
 
 **Q3: "What should they never do?"**
 The red lines. This is where trust gets defined.
-
 - Listen for: boundaries, safety constraints, access limits
 
 ### Q4: Dynamic (optional)
-
 After Q1-Q3, assess whether anything is ambiguous or needs clarification. If so, ask ONE follow-up question tailored to what's unclear. Examples:
-
 - "You mentioned monitoring - should they alert you immediately or batch updates?"
 - "They'll need access to your codebase - any repos that are off-limits?"
 - "You said 'casual' - are we talking friendly-professional or meme-level casual?"
@@ -66,35 +60,29 @@ Then ask: **"Want to tweak anything, or are we good?"**
 Before finalizing, select an appropriate model for the agent.
 
 ### Step 1: Discover available models
-
 Run `openclaw models list` or check the gateway config to see what's configured.
 
 ### Step 2: Categorize by tier
-
 Map discovered models to capability tiers:
 
-| Tier          | Models (examples)                          | Best for                                           |
-| ------------- | ------------------------------------------ | -------------------------------------------------- |
-| **reasoning** | claude-opus-_, gpt-5_, gpt-4o, deepseek-r1 | Strategy, advisory, complex analysis, architecture |
-| **balanced**  | claude-sonnet-\*, gpt-4-turbo, gpt-4o-mini | Research, writing, general tasks                   |
-| **fast**      | claude-haiku-_, gpt-3.5_, local/ollama     | High volume, simple tasks, drafts                  |
-| **code**      | codex-_, claude-sonnet-_, deepseek-coder   | Coding, refactoring, tests                         |
+| Tier | Models (examples) | Best for |
+|------|-------------------|----------|
+| **reasoning** | claude-opus-*, gpt-5*, gpt-4o, deepseek-r1 | Strategy, advisory, complex analysis, architecture |
+| **balanced** | claude-sonnet-*, gpt-4-turbo, gpt-4o-mini | Research, writing, general tasks |
+| **fast** | claude-haiku-*, gpt-3.5*, local/ollama | High volume, simple tasks, drafts |
+| **code** | codex-*, claude-sonnet-*, deepseek-coder | Coding, refactoring, tests |
 
 Use pattern matching on model names - don't hardcode specific versions.
 
 ### Step 3: Match role to tier
-
 Based on the interview:
-
 - Heavy reasoning/advisory/strategy → reasoning tier
 - Research/writing/creative → balanced tier
 - Code-focused → code tier (or balanced if not available)
 - High-volume/monitoring → fast tier
 
 ### Step 4: Select and confirm
-
 Pick the best available model for the role. In the summary card, add:
-
 ```
 🤖 Model: [selected model] ([tier] - [brief reason])
 ```
@@ -103,7 +91,6 @@ If multiple good options exist or you're unsure, ask:
 "For a [role type] role, I'd suggest [model] (good balance of capability and cost). Or [alternative] if you want [deeper reasoning / faster responses / lower cost]. Preference?"
 
 ### Notes
-
 - Don't assume any specific provider - work with what's available
 - Cheaper is better when capability is sufficient
 - The user's default model isn't always right for every agent
@@ -128,18 +115,15 @@ After the summary is confirmed, offer:
 Create an agent directory at `agents/<name>/` with:
 
 ### Always unique (generated fresh):
-
 - **AGENTS.md** - Role definition, responsibilities, operational rules, what they do freely vs ask first
 - **IDENTITY.md** - Name, emoji, creature type, vibe, core principles
 
 ### Start from template, customize based on interview:
-
 - **SOUL.md** - Base from workspace SOUL.md template, customize vibe/boundaries sections
 - **TOOLS.md** - Populated with inferred tools and access notes
 - **HEARTBEAT.md** - Empty or with initial periodic tasks if relevant to role
 
 ### Symlink to shared (default, opinionated):
-
 - **USER.md** → `../../USER.md` (they need to know who they work for)
 - **MEMORY.md** → `../../MEMORY.md` (shared team context)
 
@@ -148,7 +132,6 @@ Mention to the user: "I've linked USER.md and MEMORY.md so they know who you are
 ## Naming
 
 Use craft/role-based names. Check TOOLS.md for the full naming taxonomy:
-
 - Research: Scout, Observer, Surveyor
 - Writing: Scribe, Editor, Chronicler
 - Code: Smith, Artisan, Engineer
@@ -161,7 +144,6 @@ Check existing agents to avoid name conflicts. Suggest a name that fits the role
 ## Team Awareness
 
 Before generating, check `agents/` for existing team members. Note:
-
 - Potential overlaps with existing roles
 - Gaps this new hire fills
 - How they'll interact with existing agents
@@ -184,12 +166,12 @@ Mention any relevant observations: "You already have Scout for research - this n
    - Preserve all existing agents and fields (arrays replace on patch)
 
    **Required flow:**
-   1. Fetch config + hash
+   1) Fetch config + hash
       ```bash
       openclaw gateway call config.get --params '{}'
       ```
-   2. Build the updated `agents.list` array (existing entries + new agent) and update the `main` agent's `subagents.allowAgents` (existing list + new id).
-   3. Apply with `config.patch`:
+   2) Build the updated `agents.list` array (existing entries + new agent) and update the `main` agent's `subagents.allowAgents` (existing list + new id).
+   3) Apply with `config.patch`:
       ```bash
       openclaw gateway call config.patch --params '{
         "raw": "{\n agents: {\n  list: [ /* full list with new agent + updated main allowAgents */ ]\n }\n}\n",
@@ -197,7 +179,6 @@ Mention any relevant observations: "You already have Scout for research - this n
         "restartDelayMs": 1000
       }'
       ```
-
 3. If monthly reviews were requested, confirm the cron schedule
 4. Update any team roster if one exists
 

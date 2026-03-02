@@ -1,0 +1,58 @@
+---
+name: feishu-user-management
+description: Manage Feishu channel user preferences and session startup tasks.
+---
+
+# Feishu User Management Skill
+
+## Quick Reference
+
+| Task | Action |
+|------|--------|
+| At Feishu session start | Read corresponding Feishu_USER_<user-id>.md file |
+| Update Feishu user preferences | Edit the corresponding Feishu_USER_<user-id>.md file |
+| Simplify Feishu user file | Use the same format as USER.md |
+
+## Feishu User File Format
+
+Feishu user files must follow the same format as USER.md:
+
+```markdown
+# Feishu User: <Name>
+
+## IMPORTANT
+**THIS FILE IS FOR FEISHU USER: <Name>** (Feishu User ID: <user-id>)
+
+## User
+- **Name:** <Name>
+- **Chinese Name:** <Chinese Name> (optional)
+- **English Name:** <English Name> (optional)
+- **What to call them:** <Name> / <Nickname>
+- **Pronouns:** _(optional)_
+- **Timezone:** GMT+8
+- **Notes:** <any notes>
+
+## Preferences
+- **Usage Footer:** off|tokens|full|cost — Control per-response usage footer
+- **Thinking Level:** off|minimal|low|medium|high|xhigh — Default thinking level
+- **Reasoning Mode:** on|off|stream — Default reasoning mode
+- **<Preference Name>:** <Preference Value>
+```
+
+## Session Startup Checklist for Feishu Channels
+
+At the start of every Feishu session:
+
+1. Read SOUL.md
+2. Read USER.md
+3. Read memory/YYYY-MM-DD.md (today + yesterday)
+4. If in MAIN SESSION: Read MEMORY.md
+5. **Read the corresponding Feishu_USER_<user-id>.md file for user preferences**
+
+## Feishu User ID Mapping
+
+Feishu user files are named using the pattern: `Feishu_USER_<feishu-user-id>.md`
+
+Known Feishu users:
+- `ou_6eae500b759305b553934324445f8895.md` → Patrick (夕夕)
+- `ou_7c26f0e19219253829283b20e23a0a45.md` → 赵玉鹏 (Tina Zhao)

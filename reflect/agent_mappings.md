@@ -30,120 +30,102 @@ Maps learning categories to target agent files for updating.
 
 ### Code Style
 
-| Learning Type               | Primary Agent        | Secondary Agents                           |
-| --------------------------- | -------------------- | ------------------------------------------ |
-| Naming conventions          | `code-reviewer`      | `backend-developer`, `frontend-developer`  |
-| Formatting rules            | `code-reviewer`      | Project's `.editorconfig` or linter config |
-| TypeScript/JavaScript style | `frontend-developer` | `code-reviewer`                            |
-| Python style                | `backend-developer`  | `code-reviewer`                            |
-| Go style                    | `backend-developer`  | `code-reviewer`                            |
-| Rust style                  | `backend-developer`  | `code-reviewer`                            |
+| Learning Type | Primary Agent | Secondary Agents |
+|--------------|---------------|------------------|
+| Naming conventions | `code-reviewer` | `backend-developer`, `frontend-developer` |
+| Formatting rules | `code-reviewer` | Project's `.editorconfig` or linter config |
+| TypeScript/JavaScript style | `frontend-developer` | `code-reviewer` |
+| Python style | `backend-developer` | `code-reviewer` |
+| Go style | `backend-developer` | `code-reviewer` |
+| Rust style | `backend-developer` | `code-reviewer` |
 
 **Section in Agent File:**
-
 ```markdown
 ## Code Style
-
 ## Style Guidelines
-
 ## Heuristics > Style
 ```
 
 ### Architecture
 
-| Learning Type     | Primary Agent        | Secondary Agents         |
-| ----------------- | -------------------- | ------------------------ |
-| Design patterns   | `solution-architect` | `architecture-reviewer`  |
-| API design        | `api-architect`      | `backend-developer`      |
-| Database patterns | `backend-developer`  | `migration`              |
-| Frontend patterns | `frontend-developer` | `architecture-reviewer`  |
-| System structure  | `solution-architect` | `tech-lead-orchestrator` |
+| Learning Type | Primary Agent | Secondary Agents |
+|--------------|---------------|------------------|
+| Design patterns | `solution-architect` | `architecture-reviewer` |
+| API design | `api-architect` | `backend-developer` |
+| Database patterns | `backend-developer` | `migration` |
+| Frontend patterns | `frontend-developer` | `architecture-reviewer` |
+| System structure | `solution-architect` | `tech-lead-orchestrator` |
 
 **Section in Agent File:**
-
 ```markdown
 ## Architecture Patterns
-
 ## Design Patterns
-
 ## Heuristics > Architecture
 ```
 
 ### Process
 
-| Learning Type    | Primary Agent       | Global Config          |
-| ---------------- | ------------------- | ---------------------- |
-| Git workflow     | `CLAUDE.md`         | Commit hygiene section |
-| CI/CD            | `devops-automator`  | Pipeline config        |
-| Code review      | `code-reviewer`     | Review checklist       |
-| Testing workflow | `test-writer-fixer` | Testing philosophy     |
-| Deployment       | `release-manager`   | Release process        |
+| Learning Type | Primary Agent | Global Config |
+|--------------|---------------|---------------|
+| Git workflow | `CLAUDE.md` | Commit hygiene section |
+| CI/CD | `devops-automator` | Pipeline config |
+| Code review | `code-reviewer` | Review checklist |
+| Testing workflow | `test-writer-fixer` | Testing philosophy |
+| Deployment | `release-manager` | Release process |
 
 **Section in Agent File:**
-
 ```markdown
 ## Workflow
-
 ## Process Guidelines
-
 ## Heuristics > Process
 ```
 
 ### Domain
 
-| Learning Type     | Primary Target            | Notes                    |
-| ----------------- | ------------------------- | ------------------------ |
-| Business rules    | Project `.claude/agents/` | Domain-specific agent    |
-| Terminology       | `CLAUDE.md`               | Glossary section         |
-| Constraints       | Project-specific agent    | Validation rules         |
-| User requirements | `CLAUDE.md`               | User preferences section |
+| Learning Type | Primary Target | Notes |
+|--------------|----------------|-------|
+| Business rules | Project `.claude/agents/` | Domain-specific agent |
+| Terminology | `CLAUDE.md` | Glossary section |
+| Constraints | Project-specific agent | Validation rules |
+| User requirements | `CLAUDE.md` | User preferences section |
 
 **Section in Agent File:**
-
 ```markdown
 ## Domain Rules
-
 ## Business Logic
-
 ## Terminology
 ```
 
 ### Tools
 
-| Learning Type   | Primary Target     | Notes              |
-| --------------- | ------------------ | ------------------ |
-| CLI preferences | `CLAUDE.md`        | Tool usage section |
-| Editor config   | `.editorconfig`    | Format settings    |
-| Docker usage    | `devops-automator` | Container settings |
-| Git settings    | `CLAUDE.md`        | Commit hygiene     |
+| Learning Type | Primary Target | Notes |
+|--------------|----------------|-------|
+| CLI preferences | `CLAUDE.md` | Tool usage section |
+| Editor config | `.editorconfig` | Format settings |
+| Docker usage | `devops-automator` | Container settings |
+| Git settings | `CLAUDE.md` | Commit hygiene |
 
 **Section in Agent File:**
-
 ```markdown
 ## Tool Usage
-
 ## CLI Preferences
-
 ## Environment Setup
 ```
 
 ### Security
 
-| Learning Type    | Primary Agent    | Secondary Agents    |
-| ---------------- | ---------------- | ------------------- |
-| Input validation | `security-agent` | `code-reviewer`     |
-| Authentication   | `security-agent` | `api-architect`     |
-| Authorization    | `security-agent` | `backend-developer` |
-| Encryption       | `security-agent` | `backend-developer` |
-| OWASP rules      | `security-agent` | `code-reviewer`     |
+| Learning Type | Primary Agent | Secondary Agents |
+|--------------|---------------|------------------|
+| Input validation | `security-agent` | `code-reviewer` |
+| Authentication | `security-agent` | `api-architect` |
+| Authorization | `security-agent` | `backend-developer` |
+| Encryption | `security-agent` | `backend-developer` |
+| OWASP rules | `security-agent` | `code-reviewer` |
 
 **Section in Agent File:**
-
 ```markdown
 ## Security Heuristics
-
 ## Review Heuristics > Security
-
 ## Validation Rules
 ```
 
@@ -177,9 +159,9 @@ Always add as a bullet point under the appropriate section:
 ```markdown
 ## Heuristics
 
-- Existing rule 1
-- Existing rule 2
-- **New learning from reflection** ← Add here
+* Existing rule 1
+* Existing rule 2
+* **New learning from reflection**  ← Add here
 ```
 
 Use bold for newly added rules to distinguish them.
@@ -246,14 +228,14 @@ CLAUDE.md
 
 Decide whether to create a new skill or update an agent:
 
-| Criteria                           | Create Skill | Update Agent |
-| ---------------------------------- | ------------ | ------------ |
-| One-off solution to specific error | Yes          | No           |
-| General preference                 | No           | Yes          |
-| Debugging workaround               | Yes          | No           |
-| Code style rule                    | No           | Yes          |
-| Configuration trick                | Yes          | Sometimes    |
-| Process preference                 | No           | Yes          |
+| Criteria | Create Skill | Update Agent |
+|----------|--------------|--------------|
+| One-off solution to specific error | Yes | No |
+| General preference | No | Yes |
+| Debugging workaround | Yes | No |
+| Code style rule | No | Yes |
+| Configuration trick | Yes | Sometimes |
+| Process preference | No | Yes |
 
 ## Example Mappings
 
@@ -264,7 +246,6 @@ Decide whether to create a new skill or update an agent:
 **Category**: Code Style
 
 **Mapping**:
-
 - Primary: `~/.claude/agents/universal/frontend-developer.md`
 - Section: `## Style Guidelines`
 - Addition: `* Use \`const\` or \`let\` instead of \`var\` in TypeScript`
@@ -276,7 +257,6 @@ Decide whether to create a new skill or update an agent:
 **Category**: Architecture
 
 **Mapping**:
-
 - Primary: `~/.claude/agents/engineering/api-architect.md`
 - Section: `## Design Patterns`
 - Addition: `* Prefer cursor-based pagination over offset-based for large datasets`
@@ -288,7 +268,6 @@ Decide whether to create a new skill or update an agent:
 **Category**: Security
 
 **Mapping**:
-
 - Primary: `~/.claude/agents/engineering/security-agent.md`
 - Section: `## Validation Rules`
 - Addition: `* Always validate inputs server-side; client validation is for UX only`
@@ -302,6 +281,5 @@ Decide whether to create a new skill or update an agent:
 **Category**: New Skill
 
 **Mapping**:
-
 - Create: `.claude/skills/react-hydration-mismatch-fix/SKILL.md`
 - Include: Error message, symptoms, step-by-step fix, verification

@@ -48,20 +48,19 @@ brainstorming → write-plan → dispatch-multiple-agents → verify-task
 
 ## Red Flags - STOP and Check Skills
 
-| Thought                             | Reality                                |
-| ----------------------------------- | -------------------------------------- |
-| "This is just a simple question"    | Questions are tasks. Check for skills. |
-| "I need more context first"         | Skill check comes BEFORE clarifying.   |
-| "Let me explore first"              | Skills tell you HOW to explore.        |
-| "I can check files quickly"         | Check for skills first.                |
-| "I remember this skill"             | Skills evolve. Read current version.   |
-| "This doesn't need a formal skill"  | If a skill exists, use it.             |
-| "I'll just do this one thing first" | Check BEFORE doing anything.           |
+| Thought | Reality |
+|---------|---------|
+| "This is just a simple question" | Questions are tasks. Check for skills. |
+| "I need more context first" | Skill check comes BEFORE clarifying. |
+| "Let me explore first" | Skills tell you HOW to explore. |
+| "I can check files quickly" | Check for skills first. |
+| "I remember this skill" | Skills evolve. Read current version. |
+| "This doesn't need a formal skill" | If a skill exists, use it. |
+| "I'll just do this one thing first" | Check BEFORE doing anything. |
 
 ## Execution Discipline
 
 ### Do:
-
 - Check for skills BEFORE any action
 - Follow the plan exactly
 - Mark tasks complete as you finish
@@ -69,7 +68,6 @@ brainstorming → write-plan → dispatch-multiple-agents → verify-task
 - Ask for clarification when unclear
 
 ### Don't:
-
 - Skip skills because "it's simple"
 - Add unplanned scope without approval
 - Work silently for long periods
@@ -98,7 +96,6 @@ The doing-tasks skill executes, then updates the task tracking file for heartbea
 **User:** "Build me a todo app"
 
 **Correct flow:**
-
 1. "Using brainstorming skill to clarify requirements"
 2. Brainstorm: Ask questions, explore approaches
 3. "Using write-plan skill to create implementation plan"
@@ -109,7 +106,6 @@ The doing-tasks skill executes, then updates the task tracking file for heartbea
 8. Verify: Check against plan, get user approval
 
 **Incorrect:**
-
 - Jumping straight to coding without brainstorming
 - Starting work without a plan
 - Skipping verification

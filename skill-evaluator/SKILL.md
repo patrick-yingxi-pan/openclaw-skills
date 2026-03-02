@@ -38,26 +38,26 @@ Copy [assets/EVAL-TEMPLATE.md](assets/EVAL-TEMPLATE.md) to the skill directory a
 
 ## Categories (8 categories, 25 criteria)
 
-| #   | Category               | Source Framework             | Criteria                                                                              |
-| --- | ---------------------- | ---------------------------- | ------------------------------------------------------------------------------------- |
-| 1   | Functional Suitability | ISO 25010                    | Completeness, Correctness, Appropriateness                                            |
-| 2   | Reliability            | ISO 25010                    | Fault Tolerance, Error Reporting, Recoverability                                      |
-| 3   | Performance / Context  | ISO 25010 + Agent            | Token Cost, Execution Efficiency                                                      |
-| 4   | Usability — AI Agent   | Shneiderman, Gerhardt-Powals | Learnability, Consistency, Feedback, Error Prevention                                 |
-| 5   | Usability — Human      | Tognazzini, Norman           | Discoverability, Forgiveness                                                          |
-| 6   | Security               | ISO 25010 + OpenSSF          | Credentials, Input Validation, Data Safety                                            |
-| 7   | Maintainability        | ISO 25010                    | Modularity, Modifiability, Testability                                                |
-| 8   | Agent-Specific         | Novel                        | Trigger Precision, Progressive Disclosure, Composability, Idempotency, Escape Hatches |
+| # | Category | Source Framework | Criteria |
+|---|----------|-----------------|----------|
+| 1 | Functional Suitability | ISO 25010 | Completeness, Correctness, Appropriateness |
+| 2 | Reliability | ISO 25010 | Fault Tolerance, Error Reporting, Recoverability |
+| 3 | Performance / Context | ISO 25010 + Agent | Token Cost, Execution Efficiency |
+| 4 | Usability — AI Agent | Shneiderman, Gerhardt-Powals | Learnability, Consistency, Feedback, Error Prevention |
+| 5 | Usability — Human | Tognazzini, Norman | Discoverability, Forgiveness |
+| 6 | Security | ISO 25010 + OpenSSF | Credentials, Input Validation, Data Safety |
+| 7 | Maintainability | ISO 25010 | Modularity, Modifiability, Testability |
+| 8 | Agent-Specific | Novel | Trigger Precision, Progressive Disclosure, Composability, Idempotency, Escape Hatches |
 
 ## Interpreting Scores
 
-| Range  | Verdict    | Action                         |
-| ------ | ---------- | ------------------------------ |
-| 90–100 | Excellent  | Publish confidently            |
-| 80–89  | Good       | Publishable, note known issues |
-| 70–79  | Acceptable | Fix P0s before publishing      |
-| 60–69  | Needs Work | Fix P0+P1 before publishing    |
-| <60    | Not Ready  | Significant rework needed      |
+| Range | Verdict | Action |
+|-------|---------|--------|
+| 90–100 | Excellent | Publish confidently |
+| 80–89 | Good | Publishable, note known issues |
+| 70–79 | Acceptable | Fix P0s before publishing |
+| 60–69 | Needs Work | Fix P0+P1 before publishing |
+| <60 | Not Ready | Significant rework needed |
 
 ## Deeper Security Scanning
 

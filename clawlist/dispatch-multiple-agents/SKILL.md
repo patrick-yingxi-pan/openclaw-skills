@@ -10,14 +10,12 @@ When you have multiple independent tasks, don't do them sequentially. Dispatch a
 ## When to Use
 
 **Use when:**
-
 - 3+ independent tasks need attention
 - Tasks don't share state or resources
 - No dependencies between tasks
 - Speed matters
 
 **Don't use when:**
-
 - Tasks are related (fixing one might fix others)
 - Tasks share files/resources (would conflict)
 - You need full system context for all tasks
@@ -28,9 +26,8 @@ When you have multiple independent tasks, don't do them sequentially. Dispatch a
 ### 1. Identify Independent Domains
 
 Group work by what's needed:
-
 - Task A: Research competitor A
-- Task B: Research competitor B
+- Task B: Research competitor B  
 - Task C: Research competitor C
 
 Each is independent.
@@ -38,7 +35,6 @@ Each is independent.
 ### 2. Create Focused Tasks
 
 Each subagent gets:
-
 - **Specific scope:** One clear task
 - **All context needed:** Don't make them hunt
 - **Clear output:** What should they return?
@@ -51,7 +47,6 @@ Using sessions_spawn for concurrent execution.
 ### 4. Review and Integrate
 
 When agents return:
-
 - Read each result
 - Verify no conflicts
 - Integrate findings
@@ -72,7 +67,6 @@ brainstorming → write-plan → dispatch-multiple-agents → verify-task
 **Problem:** Research 5 competitors
 
 **Dispatch:**
-
 - Agent 1 → Competitor A
 - Agent 2 → Competitor B
 - Agent 3 → Competitor C

@@ -10,35 +10,33 @@ These patterns indicate the user is explicitly stating a rule or correction. Alw
 
 #### Negative Directives
 
-| Pattern                    | Type        | Example                           |
-| -------------------------- | ----------- | --------------------------------- |
-| `never`                    | correction  | "Never use var in TypeScript"     |
-| `don't` / `do not`         | correction  | "Don't commit directly to main"   |
-| `stop doing`               | correction  | "Stop doing manual deployments"   |
-| `wrong`                    | correction  | "That's wrong, use snake_case"    |
-| `not like that`            | correction  | "Not like that, indent with tabs" |
-| `incorrect`                | correction  | "That's incorrect syntax"         |
-| `should not` / `shouldn't` | prohibition | "You shouldn't use eval()"        |
-| `must not` / `mustn't`     | prohibition | "Must not expose secrets"         |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `never` | correction | "Never use var in TypeScript" |
+| `don't` / `do not` | correction | "Don't commit directly to main" |
+| `stop doing` | correction | "Stop doing manual deployments" |
+| `wrong` | correction | "That's wrong, use snake_case" |
+| `not like that` | correction | "Not like that, indent with tabs" |
+| `incorrect` | correction | "That's incorrect syntax" |
+| `should not` / `shouldn't` | prohibition | "You shouldn't use eval()" |
+| `must not` / `mustn't` | prohibition | "Must not expose secrets" |
 
 **Regex Pattern:**
-
 ```regex
 \b(never|don't|do not|stop doing|wrong|not like that|incorrect|should not|shouldn't|must not|mustn't)\b
 ```
 
 #### Positive Directives
 
-| Pattern       | Type          | Example                              |
-| ------------- | ------------- | ------------------------------------ |
-| `always`      | requirement   | "Always validate inputs"             |
-| `must`        | requirement   | "You must use parameterized queries" |
-| `required`    | requirement   | "It's required to have tests"        |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `always` | requirement | "Always validate inputs" |
+| `must` | requirement | "You must use parameterized queries" |
+| `required` | requirement | "It's required to have tests" |
 | `the rule is` | explicit_rule | "The rule is no console.log in prod" |
-| `correct way` | explicit_rule | "The correct way is to use hooks"    |
+| `correct way` | explicit_rule | "The correct way is to use hooks" |
 
 **Regex Pattern:**
-
 ```regex
 \b(always|must|required|the rule is|correct way)\b
 ```
@@ -47,30 +45,28 @@ These patterns indicate the user is explicitly stating a rule or correction. Alw
 
 These indicate repeated corrections - highest priority learnings.
 
-| Pattern              | Type        | Example                              |
-| -------------------- | ----------- | ------------------------------------ |
-| `I already told you` | frustration | "I already told you about this"      |
-| `again?`             | frustration | "Wrong again?"                       |
-| `not again`          | frustration | "Oh not again"                       |
-| `how many times`     | frustration | "How many times do I need to say..." |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `I already told you` | frustration | "I already told you about this" |
+| `again?` | frustration | "Wrong again?" |
+| `not again` | frustration | "Oh not again" |
+| `how many times` | frustration | "How many times do I need to say..." |
 
 **Regex Pattern:**
-
 ```regex
 (I already told you|again\?|not again|how many times)
 ```
 
 #### Explicit Rules
 
-| Pattern           | Type          | Example                           |
-| ----------------- | ------------- | --------------------------------- |
-| `the rule is`     | explicit_rule | "The rule is we use ESLint"       |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `the rule is` | explicit_rule | "The rule is we use ESLint" |
 | `you should know` | explicit_rule | "You should know we use Prettier" |
-| `remember that`   | explicit_rule | "Remember that we're on Node 20"  |
-| `don't forget`    | explicit_rule | "Don't forget the error handling" |
+| `remember that` | explicit_rule | "Remember that we're on Node 20" |
+| `don't forget` | explicit_rule | "Don't forget the error handling" |
 
 **Regex Pattern:**
-
 ```regex
 (the rule is|you should know|remember that|don't forget)
 ```
@@ -81,46 +77,43 @@ These patterns indicate the user approved a specific approach. Apply with reason
 
 #### Approval Markers
 
-| Pattern          | Type     | Example                         |
-| ---------------- | -------- | ------------------------------- |
-| `perfect`        | approval | "Perfect, that's what I wanted" |
-| `exactly`        | approval | "Exactly right"                 |
-| `that's right`   | approval | "That's right, keep it"         |
-| `yes, like that` | approval | "Yes, like that"                |
-| `correct`        | approval | "Correct implementation"        |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `perfect` | approval | "Perfect, that's what I wanted" |
+| `exactly` | approval | "Exactly right" |
+| `that's right` | approval | "That's right, keep it" |
+| `yes, like that` | approval | "Yes, like that" |
+| `correct` | approval | "Correct implementation" |
 
 **Regex Pattern:**
-
 ```regex
 \b(perfect|exactly|that's right|yes, like that|correct)\b
 ```
 
 #### Positive Feedback
 
-| Pattern     | Type              | Example                     |
-| ----------- | ----------------- | --------------------------- |
-| `good`      | positive_feedback | "Good approach"             |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `good` | positive_feedback | "Good approach" |
 | `great job` | positive_feedback | "Great job on the refactor" |
-| `well done` | positive_feedback | "Well done with the tests"  |
-| `nice`      | positive_feedback | "Nice solution"             |
-| `excellent` | positive_feedback | "Excellent work"            |
+| `well done` | positive_feedback | "Well done with the tests" |
+| `nice` | positive_feedback | "Nice solution" |
+| `excellent` | positive_feedback | "Excellent work" |
 
 **Regex Pattern:**
-
 ```regex
 \b(good|great job|well done|nice|excellent)\b
 ```
 
 #### Continuation Markers
 
-| Pattern         | Type         | Example                       |
-| --------------- | ------------ | ----------------------------- |
-| `keep doing`    | continuation | "Keep doing it this way"      |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `keep doing` | continuation | "Keep doing it this way" |
 | `continue with` | continuation | "Continue with this approach" |
-| `stick with`    | continuation | "Stick with React hooks"      |
+| `stick with` | continuation | "Stick with React hooks" |
 
 **Regex Pattern:**
-
 ```regex
 \b(keep doing|continue with|stick with)\b
 ```
@@ -131,29 +124,27 @@ These patterns suggest preferences but require validation before encoding as rul
 
 #### Suggestions
 
-| Pattern         | Type       | Example                           |
-| --------------- | ---------- | --------------------------------- |
-| `maybe`         | suggestion | "Maybe try TypeScript"            |
-| `perhaps`       | suggestion | "Perhaps use a different library" |
-| `might want to` | suggestion | "You might want to add caching"   |
-| `consider`      | suggestion | "Consider using memoization"      |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `maybe` | suggestion | "Maybe try TypeScript" |
+| `perhaps` | suggestion | "Perhaps use a different library" |
+| `might want to` | suggestion | "You might want to add caching" |
+| `consider` | suggestion | "Consider using memoization" |
 
 **Regex Pattern:**
-
 ```regex
 \b(maybe|perhaps|might want to|consider)\b
 ```
 
 #### Observations
 
-| Pattern      | Type        | Example                     |
-| ------------ | ----------- | --------------------------- |
-| `seems like` | observation | "Seems like this works"     |
-| `appears to` | observation | "Appears to be faster"      |
+| Pattern | Type | Example |
+|---------|------|---------|
+| `seems like` | observation | "Seems like this works" |
+| `appears to` | observation | "Appears to be faster" |
 | `looks like` | observation | "Looks like a good pattern" |
 
 **Regex Pattern:**
-
 ```regex
 \b(seems like|appears to|looks like)\b
 ```
@@ -171,7 +162,6 @@ Patterns indicating code style preferences:
 ```
 
 Examples:
-
 - "Use snake_case for Python variables"
 - "We prefer single quotes for strings"
 - "Indent with 2 spaces, not tabs"
@@ -187,7 +177,6 @@ Patterns indicating architectural decisions:
 ```
 
 Examples:
-
 - "Use dependency injection for services"
 - "Keep components loosely coupled"
 - "Follow the repository pattern"
@@ -203,7 +192,6 @@ Patterns indicating workflow preferences:
 ```
 
 Examples:
-
 - "Always run tests before commit"
 - "Use conventional commits"
 - "Squash commits on merge"
@@ -219,7 +207,6 @@ Patterns indicating business logic:
 ```
 
 Examples:
-
 - "Orders must be validated before processing"
 - "Users need email verification"
 - "Payments require two-factor auth"
@@ -235,7 +222,6 @@ Patterns indicating tool preferences:
 ```
 
 Examples:
-
 - "Use pnpm instead of npm"
 - "Configure ESLint with these rules"
 - "Run Docker in production"
@@ -252,7 +238,6 @@ Patterns indicating skill-worthy discoveries:
 ```
 
 Examples:
-
 - "The workaround is to clear the cache first"
 - "After 2 hours debugging, found the issue was..."
 - "Turns out the error message was misleading"

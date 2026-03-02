@@ -6,22 +6,20 @@ This rubric adds the **manual assessment** dimensions that require judgment.
 
 ## Scoring: 0–4 per criterion
 
-| Score | Meaning    | Guideline                                          |
-| ----- | ---------- | -------------------------------------------------- |
-| 0     | Fail       | Missing or broken — blocks publishing              |
-| 1     | Poor       | Present but inadequate — significant rework needed |
-| 2     | Acceptable | Works but has notable gaps — should improve        |
-| 3     | Good       | Solid with minor issues — publishable              |
-| 4     | Excellent  | Best-in-class — no meaningful improvements         |
+| Score | Meaning | Guideline |
+|-------|---------|-----------|
+| 0 | Fail | Missing or broken — blocks publishing |
+| 1 | Poor | Present but inadequate — significant rework needed |
+| 2 | Acceptable | Works but has notable gaps — should improve |
+| 3 | Good | Solid with minor issues — publishable |
+| 4 | Excellent | Best-in-class — no meaningful improvements |
 
 ---
 
 ## 1. Functional Suitability (ISO 25010)
 
 ### 1.1 Completeness
-
-_Does it cover the domain adequately?_
-
+*Does it cover the domain adequately?*
 - **4:** Covers all common operations + edge cases. A user would rarely need to go outside the skill.
 - **3:** Covers core operations. Missing some advanced/niche features.
 - **2:** Covers basic operations. Missing several expected features.
@@ -29,9 +27,7 @@ _Does it cover the domain adequately?_
 - **0:** Stub or non-functional.
 
 ### 1.2 Correctness
-
-_Do operations produce correct results?_
-
+*Do operations produce correct results?*
 - **4:** All operations tested and verified. Edge cases handled.
 - **3:** Core operations correct. Minor bugs in edge cases.
 - **2:** Mostly correct but some operations produce wrong results.
@@ -39,9 +35,7 @@ _Do operations produce correct results?_
 - **0:** Fundamentally broken.
 
 ### 1.3 Appropriateness
-
-_Is the technical approach suitable?_
-
+*Is the technical approach suitable?*
 - **4:** Zero external deps, portable, follows platform conventions perfectly.
 - **3:** Minimal deps, good approach, minor awkwardness.
 - **2:** Unnecessary deps or suboptimal approach for some operations.
@@ -53,9 +47,7 @@ _Is the technical approach suitable?_
 ## 2. Reliability (ISO 25010)
 
 ### 2.1 Fault Tolerance
-
-_How does it handle failures?_
-
+*How does it handle failures?*
 - **4:** Retries transient errors, graceful fallbacks, partial operations succeed even if some fail.
 - **3:** Catches and reports errors clearly. Some retry or fallback logic.
 - **2:** Catches errors but dies on first failure. No retry.
@@ -63,9 +55,7 @@ _How does it handle failures?_
 - **0:** Crashes with tracebacks on normal error conditions.
 
 ### 2.2 Error Reporting
-
-_Are errors actionable?_
-
+*Are errors actionable?*
 - **4:** Structured errors (JSON in --json mode), consistent stderr, actionable messages with fix suggestions.
 - **3:** Clear error messages to stderr. User knows what went wrong.
 - **2:** Error messages exist but are vague or inconsistent (mixed stdout/stderr).
@@ -73,9 +63,7 @@ _Are errors actionable?_
 - **0:** Silent failures.
 
 ### 2.3 Recoverability
-
-_Can interrupted operations resume?_
-
+*Can interrupted operations resume?*
 - **4:** Checkpoint/resume for batch operations. Idempotent by default.
 - **3:** No checkpoint but operations are idempotent (safe to re-run).
 - **2:** Re-running is safe but redundant work is done.
@@ -87,9 +75,7 @@ _Can interrupted operations resume?_
 ## 3. Performance / Context Efficiency
 
 ### 3.1 SKILL.md Token Cost
-
-_Is the SKILL.md appropriately sized for its value?_
-
+*Is the SKILL.md appropriately sized for its value?*
 - **4:** <150 lines. Progressive disclosure via references. Every line earns its tokens.
 - **3:** 150-250 lines. Some content could move to references.
 - **2:** 250-400 lines. Verbose explanations an AI doesn't need.
@@ -97,9 +83,7 @@ _Is the SKILL.md appropriately sized for its value?_
 - **0:** So large it crowds out other context.
 
 ### 3.2 Execution Efficiency
-
-_Does the script avoid unnecessary work?_
-
+*Does the script avoid unnecessary work?*
 - **4:** Paginated, filtered, incremental where possible. Rate-limited politely.
 - **3:** Handles pagination. Some unnecessary full-scans.
 - **2:** Works but does redundant API calls or full-library scans.
@@ -111,9 +95,7 @@ _Does the script avoid unnecessary work?_
 ## 4. Usability — AI Agent (Shneiderman, Gerhardt-Powals)
 
 ### 4.1 Cold-Start Learnability
-
-_Can a fresh AI instance use this skill correctly on first try?_
-
+*Can a fresh AI instance use this skill correctly on first try?*
 - **4:** SKILL.md + examples are sufficient. Troubleshooting reference covers errors. Agent never needs to read source.
 - **3:** SKILL.md covers core usage. Some edge cases require experimentation.
 - **2:** Agent needs to read source code to understand some operations.
@@ -121,9 +103,7 @@ _Can a fresh AI instance use this skill correctly on first try?_
 - **0:** No documentation. Agent must reverse-engineer everything.
 
 ### 4.2 Consistency
-
-_Are patterns uniform across commands/operations?_
-
+*Are patterns uniform across commands/operations?*
 - **4:** Same flag names, same output format, same error handling everywhere.
 - **3:** Mostly consistent. One or two exceptions.
 - **2:** Inconsistent flags, mixed output formats, or uneven error handling.
@@ -131,9 +111,7 @@ _Are patterns uniform across commands/operations?_
 - **0:** No discernible pattern.
 
 ### 4.3 Feedback Quality
-
-_Does the skill communicate progress and results clearly?_
-
+*Does the skill communicate progress and results clearly?*
 - **4:** Progress indicators, summary reports, emoji-scannable output, JSON mode.
 - **3:** Clear success/failure messages. Batch progress shown.
 - **2:** Basic output. Hard to tell success from failure in batch operations.
@@ -141,9 +119,7 @@ _Does the skill communicate progress and results clearly?_
 - **0:** Silent or cryptic.
 
 ### 4.4 Error Prevention
-
-_Does the skill prevent mistakes before they happen?_
-
+*Does the skill prevent mistakes before they happen?*
 - **4:** Input validation, safe defaults (recoverable > permanent), dry-run for destructive ops, duplicate detection.
 - **3:** Some validation and safe defaults. Destructive ops have confirmation.
 - **2:** Minimal validation. Unsafe defaults for some operations.
@@ -155,9 +131,7 @@ _Does the skill prevent mistakes before they happen?_
 ## 5. Usability — Human End User (Tognazzini, Norman)
 
 ### 5.1 Discoverability
-
-_Can a human figure out what's available?_
-
+*Can a human figure out what's available?*
 - **4:** --help on all commands with examples. SKILL.md documents everything.
 - **3:** --help works. SKILL.md covers core operations.
 - **2:** Basic --help. Some features undocumented.
@@ -165,9 +139,7 @@ _Can a human figure out what's available?_
 - **0:** No help or documentation.
 
 ### 5.2 Forgiveness / Undo
-
-_Can mistakes be reversed?_
-
+*Can mistakes be reversed?*
 - **4:** Destructive ops default to recoverable (trash). Undo available. Confirmation prompts.
 - **3:** Confirmation on destructive ops. Some recoverability.
 - **2:** Confirmation exists but permanent is the default.
@@ -179,9 +151,7 @@ _Can mistakes be reversed?_
 ## 6. Security (ISO 25010 + OSS Hygiene)
 
 ### 6.1 Credential Handling
-
-_How are secrets managed?_
-
+*How are secrets managed?*
 - **4:** All secrets via env vars. No personal data in source. Documented.
 - **3:** Secrets via env vars. Minor issues (undocumented optional var).
 - **2:** Mostly env vars but some hardcoded values.
@@ -189,9 +159,7 @@ _How are secrets managed?_
 - **0:** Credentials in source AND committed to git.
 
 ### 6.2 Input Validation
-
-_Are inputs sanitized?_
-
+*Are inputs sanitized?*
 - **4:** All user inputs validated with helpful error messages.
 - **3:** Key inputs validated. Some edge cases unchecked.
 - **2:** Minimal validation. Bad input causes API errors.
@@ -199,9 +167,7 @@ _Are inputs sanitized?_
 - **0:** Injection-vulnerable.
 
 ### 6.3 Data Safety
-
-_Are write operations safe by default?_
-
+*Are write operations safe by default?*
 - **4:** Dry-run defaults, confirmation prompts, safe defaults (trash > delete).
 - **3:** Most write ops have confirmation. Safe defaults.
 - **2:** Some write ops unprotected.
@@ -213,9 +179,7 @@ _Are write operations safe by default?_
 ## 7. Maintainability (ISO 25010)
 
 ### 7.1 Modularity
-
-_Is the code well-organized?_
-
+*Is the code well-organized?*
 - **4:** Clear separation of concerns. Helpers extracted. Easy to add features.
 - **3:** Functions organized by command. Some helpers extracted.
 - **2:** Monolithic but navigable. Would benefit from refactoring.
@@ -223,9 +187,7 @@ _Is the code well-organized?_
 - **0:** Incomprehensible.
 
 ### 7.2 Modifiability
-
-_How easy is it to change?_
-
+*How easy is it to change?*
 - **4:** Adding a new command is copy-paste-modify. Patterns are clear.
 - **3:** Clear patterns. Some globals or tight coupling.
 - **2:** Can be modified but requires understanding implicit dependencies.
@@ -233,9 +195,7 @@ _How easy is it to change?_
 - **0:** Effectively frozen — too fragile to touch.
 
 ### 7.3 Testability
-
-_Can it be tested?_
-
+*Can it be tested?*
 - **4:** Test suite exists. Functions return values. Mockable API layer.
 - **3:** No test suite but functions are testable (return values, pure helpers).
 - **2:** Some testable functions. Others depend on live API or sys.exit.
@@ -247,9 +207,7 @@ _Can it be tested?_
 ## 8. Agent-Specific Heuristics
 
 ### 8.1 Trigger Precision
-
-_Does the description activate the skill reliably?_
-
+*Does the description activate the skill reliably?*
 - **4:** Specific domain + action words + "Use when..." contexts. Low false positive/negative risk.
 - **3:** Good domain keywords. Some ambiguity with similar skills.
 - **2:** Too broad or too narrow. Frequent false triggers or missed triggers.
@@ -257,9 +215,7 @@ _Does the description activate the skill reliably?_
 - **0:** No description.
 
 ### 8.2 Progressive Disclosure
-
-_Is context loaded efficiently?_
-
+*Is context loaded efficiently?*
 - **4:** 3+ levels: description → SKILL.md → references. Agent loads only what's needed.
 - **3:** 2 levels: description → SKILL.md. Everything in one file but concise.
 - **2:** Everything in SKILL.md. No reference files despite complex domain.
@@ -267,9 +223,7 @@ _Is context loaded efficiently?_
 - **0:** No disclosure hierarchy.
 
 ### 8.3 Composability
-
-_Can it work with other tools in a pipeline?_
-
+*Can it work with other tools in a pipeline?*
 - **4:** --json for all commands, stdin input, proper exit codes, stderr for errors.
 - **3:** --json for key commands. Good exit codes.
 - **2:** Limited machine-readable output. Some commands.
@@ -277,9 +231,7 @@ _Can it work with other tools in a pipeline?_
 - **0:** Output is unparseable.
 
 ### 8.4 Idempotency
-
-_Is it safe to re-run?_
-
+*Is it safe to re-run?*
 - **4:** All operations are idempotent. Re-running produces same state.
 - **3:** Most operations idempotent. Some may create duplicates.
 - **2:** Core operations idempotent. Batch ops may duplicate.
@@ -287,9 +239,7 @@ _Is it safe to re-run?_
 - **0:** Re-running corrupts state.
 
 ### 8.5 Escape Hatches
-
-_Can the agent/user override default behavior?_
-
+*Can the agent/user override default behavior?*
 - **4:** --force, --dry-run, --verbose, --quiet, --json, custom API URLs.
 - **3:** --force and --dry-run available. Good flag coverage.
 - **2:** Some overrides. Missing key flags.

@@ -10,20 +10,17 @@ Manage Python virtual environments for skills and tools to avoid dependency conf
 ## Quick Start
 
 ### Check if venv exists
-
 ```bash
 ls -la /path/to/skill/venv/
 ```
 
 ### Create a new venv
-
 ```bash
 cd /path/to/skill
 python3 -m venv venv
 ```
 
 ### Activate and install dependencies
-
 ```bash
 cd /path/to/skill
 source venv/bin/activate
@@ -31,7 +28,6 @@ pip install <package-name>
 ```
 
 ### Run a script with venv
-
 ```bash
 cd /path/to/skill
 source venv/bin/activate
@@ -63,7 +59,6 @@ python3 script.py
 ### Scenario 1: Externally Managed Environment
 
 **Problem:**
-
 ```
 error: externally-managed-environment
 × This environment is externally managed
@@ -92,7 +87,6 @@ python3 your_script.py
 ### Scenario 2: ModuleNotFoundError
 
 **Problem:**
-
 ```
 Traceback (most recent call last):
   File "script.py", line 5, in <module>
@@ -147,32 +141,27 @@ python --version
 ### Workflow A: Setting Up a New Skill with Dependencies
 
 1. **Check if venv already exists**
-
    ```bash
    cd /path/to/skill
    ls -la venv/
    ```
 
 2. **If no venv, create one**
-
    ```bash
    python3 -m venv venv
    ```
 
 3. **Activate the venv**
-
    ```bash
    source venv/bin/activate
    ```
 
 4. **Install required packages**
-
    ```bash
    pip install pyyaml  # or whatever packages are needed
    ```
 
 5. **Verify installation**
-
    ```bash
    python3 -c "import yaml; print('OK')"
    ```
@@ -185,20 +174,17 @@ python --version
 ### Workflow B: Using an Existing Venv
 
 1. **Activate the venv**
-
    ```bash
    cd /path/to/skill
    source venv/bin/activate
    ```
 
 2. **Check installed packages** (optional)
-
    ```bash
    pip list
    ```
 
 3. **Run your script**
-
    ```bash
    python3 scripts/your_script.py
    ```
@@ -211,14 +197,12 @@ python --version
 ### Workflow C: Resetting a Corrupted Venv
 
 1. **Delete the old venv**
-
    ```bash
    cd /path/to/skill
    rm -rf venv/
    ```
 
 2. **Create a fresh venv**
-
    ```bash
    python3 -m venv venv
    ```
@@ -239,14 +223,14 @@ python --version
 ✅ **Keep venv inside the skill directory** (named `venv/`)  
 ✅ **Document dependencies** in SKILL.md or a requirements.txt  
 ✅ **Activate venv before running scripts**  
-✅ **Test after installation** to verify it works
+✅ **Test after installation** to verify it works  
 
 ### Don'ts
 
 ❌ **Don't use `--break-system-packages`** - it can break your system  
 ❌ **Don't commit venv/ to git** - it's machine-specific  
 ❌ **Don't manually edit files inside venv/** - let pip manage it  
-❌ **Don't mix venvs from different Python versions**
+❌ **Don't mix venvs from different Python versions**  
 
 ### Git Ignore
 
@@ -329,16 +313,16 @@ python3 -m venv venv
 
 ## Quick Reference
 
-| Task               | Command                               |
-| ------------------ | ------------------------------------- |
-| Create venv        | `python3 -m venv venv`                |
-| Activate venv      | `source venv/bin/activate`            |
-| Deactivate venv    | `deactivate`                          |
-| Install package    | `pip install <package>`               |
-| List packages      | `pip list`                            |
-| Delete venv        | `rm -rf venv/`                        |
-| Check Python       | `which python3` & `python3 --version` |
-| Check if activated | `echo $VIRTUAL_ENV`                   |
+| Task | Command |
+|------|---------|
+| Create venv | `python3 -m venv venv` |
+| Activate venv | `source venv/bin/activate` |
+| Deactivate venv | `deactivate` |
+| Install package | `pip install <package>` |
+| List packages | `pip list` |
+| Delete venv | `rm -rf venv/` |
+| Check Python | `which python3` & `python3 --version` |
+| Check if activated | `echo $VIRTUAL_ENV` |
 
 ---
 

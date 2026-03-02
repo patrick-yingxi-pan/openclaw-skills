@@ -39,6 +39,11 @@
     "confidence_threshold": "medium"
   },
   "clawdbot": {
-    "triggers": ["reflect", "self-reflect", "review session", "extract learnings"]
+    "triggers": [
+      "reflect",
+      "self-reflect",
+      "review session",
+      "extract learnings"
+    ]
   }
 }
