@@ -1,11 +1,87 @@
 ---
 name: skill-creator
-description: Create or update AgentSkills with proper structure, progressive disclosure, and bundled resources. Use when designing new skills, structuring existing skills, packaging skills for distribution, or when working with skill scripts, references, and assets. Follow this skill's guidance to create high-quality, maintainable, and publish-ready skills.
+description: Create or update AgentSkills with proper structure, progressive disclosure, and bundled resources. Use when designing new skills, structuring existing skills, packaging skills for distribution, or when working with skill scripts, references, and assets. Follow this skill's guidance to create high-quality, maintainable, and publish-ready skills. IMPORTANT: ALWAYS check for and remove/replace personal identifiable information (PII) in skill files - names, user IDs, emails, phone numbers, addresses, etc. Use random placeholder data instead of real personal information.
 ---
 
 # Skill Creator
 
 This skill provides guidance for creating effective skills.
+
+## 🚨 PRIVACY PROTECTION - IMPORTANT
+
+### Critical Privacy Rule
+
+**NEVER include personal identifiable information (PII) in skill files.**
+
+When creating or updating skills, ALWAYS scan for and remove/replace:
+
+- **Names** - Real names of users, contributors, or any individuals
+- **User IDs** - Feishu Open IDs, Discord user IDs, Slack user IDs, etc.
+- **Email addresses** - Any email addresses (personal or corporate)
+- **Phone numbers** - Any phone numbers
+- **Home addresses** - Physical addresses, locations
+- **API keys** - Secrets, tokens, credentials
+- **Account numbers** - Any account identifiers
+- **IP addresses** - Internal or external IPs
+- **Hostnames** - Internal server names
+- **File paths** - Personal directory paths (use generic paths instead)
+
+### How to Replace PII
+
+Use realistic-looking but fake placeholder data instead:
+
+**Instead of:**
+- Real name: "Patrick Pan"
+- Feishu ID: "ou_7c26f0e19219253829283b20e23a0a45"
+- Email: "patrick@example.com"
+- Phone: "+86 138 0000 0000"
+
+**Use:**
+- Fake name: "Alex Chen" or "User Name"
+- Fake ID: "ou_1234567890abcdef1234567890abcdef"
+- Fake email: "user@example.com" or "alex.chen@example.org"
+- Fake phone: "+86 138 1234 5678"
+
+### PII Check Checklist
+
+**BEFORE creating/committing any skill, ALWAYS go through this checklist:**
+
+- [ ] Scan for Feishu Open IDs (pattern: `ou_` followed by 32 hex characters)
+  - Replace with: `ou_1234567890abcdef1234567890abcdef`
+- [ ] Scan for email addresses (pattern: `*@*.*`)
+  - Replace with: `user@example.com` or `alex.chen@example.org`
+- [ ] Scan for phone numbers (pattern: `+86` or `13x`/`15x`/`17x`/`18x` followed by 9 digits)
+  - Replace with: `+86 138 1234 5678` or `13812345678`
+- [ ] Scan for Chinese names (2-4 Chinese characters)
+  - Replace with: `张小明` or `Alex Chen`
+- [ ] Scan for personal file paths (pattern: `/home/patrick/` or similar)
+  - Replace with: `/home/user/` or generic paths
+- [ ] Scan for API keys, tokens, credentials (long random strings)
+  - Replace with placeholder comments or remove entirely
+- [ ] Scan for internal hostnames, IP addresses
+  - Replace with generic placeholders or remove
+- [ ] Scan for any other personal identifiable information
+  - When in doubt, replace with fake data
+
+### Quick Reference: Fake Data Templates
+
+| Type | Real Example | Fake Replacement |
+|------|--------------|-----------------|
+| Feishu ID | `ou_7c26f0e19219253829283b20e23a0a45` | `ou_1234567890abcdef1234567890abcdef` |
+| Name | Patrick Pan | 张小明 / Alex Chen |
+| Email | patrick@example.com | user@example.com |
+| Phone | +86 138 0000 0000 | +86 138 1234 5678 |
+| Path | /home/patrick/ | /home/user/ |
+
+### Verification
+
+Always manually verify after making changes:
+1. Read through the skill files
+2. Check that no real personal information remains
+3. Confirm that placeholder data looks realistic
+4. Test that the skill still works correctly
+
+---
 
 ## About Skills
 
@@ -198,175 +274,128 @@ Codex reads REDLINING.md or OOXML.md only when the user needs those features.
 - **Avoid deeply nested references** - Keep references one level deep from SKILL.md. All reference files should link directly from SKILL.md.
 - **Structure longer reference files** - For files longer than 100 lines, include a table of contents at the top so Codex can see the full scope when previewing.
 
-## Skill Creation Process
+---
 
-Skill creation involves these steps:
+## Skill Creation Workflow
 
-1. Understand the skill with concrete examples
-2. Plan reusable skill contents (scripts, references, assets)
-3. Initialize the skill (run init_skill.py)
-4. Edit the skill (implement resources and write SKILL.md)
-5. Package the skill (run package_skill.py)
-6. Iterate based on real usage
+Follow this step-by-step process to create a new skill:
 
-Follow these steps in order, skipping only if there is a clear reason why they are not applicable.
+### Step 1: Create the Skill Directory
 
-### Skill Naming
+Create a new directory for your skill. The directory name should be:
+- All lowercase
+- Use hyphens for spaces
+- Descriptive and concise
+- Maximum 64 characters
 
-- Use lowercase letters, digits, and hyphens only; normalize user-provided titles to hyphen-case (e.g., "Plan Mode" -> `plan-mode`).
-- When generating names, generate a name under 64 characters (letters, digits, hyphens).
-- Prefer short, verb-led phrases that describe the action.
-- Namespace by tool when it improves clarity or triggering (e.g., `gh-address-comments`, `linear-address-issue`).
-- Name the skill folder exactly after the skill name.
+**Good examples:**
+- `pdf-editor`
+- `feishu-channel`
+- `clawlist`
 
-### Step 1: Understanding the Skill with Concrete Examples
+**Bad examples:**
+- `PDF Editor` (spaces)
+- `my_awesome_skill` (underscores)
+- `this-is-a-very-long-skill-name-that-is-way-too-long` (too long)
 
-Skip this step only when the skill's usage patterns are already clearly understood. It remains valuable even when working with an existing skill.
-
-To create an effective skill, clearly understand concrete examples of how the skill will be used. This understanding can come from either direct user examples or generated examples that are validated with user feedback.
-
-For example, when building an image-editor skill, relevant questions include:
-
-- "What functionality should the image-editor skill support? Editing, rotating, anything else?"
-- "Can you give some examples of how this skill would be used?"
-- "I can imagine users asking for things like 'Remove the red-eye from this image' or 'Rotate this image'. Are there other ways you imagine this skill being used?"
-- "What would a user say that should trigger this skill?"
-
-To avoid overwhelming users, avoid asking too many questions in a single message. Start with the most important questions and follow up as needed for better effectiveness.
-
-Conclude this step when there is a clear sense of the functionality the skill should support.
-
-### Step 2: Planning the Reusable Skill Contents
-
-To turn concrete examples into an effective skill, analyze each example by:
-
-1. Considering how to execute on the example from scratch
-2. Identifying what scripts, references, and assets would be helpful when executing these workflows repeatedly
-
-Example: When building a `pdf-editor` skill to handle queries like "Help me rotate this PDF," the analysis shows:
-
-1. Rotating a PDF requires re-writing the same code each time
-2. A `scripts/rotate_pdf.py` script would be helpful to store in the skill
-
-Example: When designing a `frontend-webapp-builder` skill for queries like "Build me a todo app" or "Build me a dashboard to track my steps," the analysis shows:
-
-1. Writing a frontend webapp requires the same boilerplate HTML/React each time
-2. An `assets/hello-world/` template containing the boilerplate HTML/React project files would be helpful to store in the skill
-
-Example: When building a `big-query` skill to handle queries like "How many users have logged in today?" the analysis shows:
-
-1. Querying BigQuery requires re-discovering the table schemas and relationships each time
-2. A `references/schema.md` file documenting the table schemas would be helpful to store in the skill
-
-To establish the skill's contents, analyze each concrete example to create a list of the reusable resources to include: scripts, references, and assets.
-
-### Step 3: Initializing the Skill
-
-At this point, it is time to actually create the skill.
-
-Skip this step only if the skill being developed already exists, and iteration or packaging is needed. In this case, continue to the next step.
-
-When creating a new skill from scratch, always run the `init_skill.py` script. The script conveniently generates a new template skill directory that automatically includes everything a skill requires, making the skill creation process much more efficient and reliable.
-
-Usage:
-
+Create the directory:
 ```bash
-scripts/init_skill.py <skill-name> --path <output-directory> [--resources scripts,references,assets] [--examples]
+mkdir my-new-skill
+cd my-new-skill
 ```
 
-Examples:
+### Step 2: Create SKILL.md from Template
 
-```bash
-scripts/init_skill.py my-skill --path skills/public
-scripts/init_skill.py my-skill --path skills/public --resources scripts,references
-scripts/init_skill.py my-skill --path skills/public --resources scripts --examples
+Create a `SKILL.md` file using this template:
+
+```markdown
+---
+name: my-new-skill
+description: [TODO: Complete and informative explanation of what the skill does and when to use it. Include WHEN to use this skill - specific scenarios, file types, or tasks that trigger it.]
+---
+
+# My New Skill
+
+## 🚨 PRIVACY CHECK - BEFORE CONTINUING
+
+**REMINDER: This skill MUST NOT contain any personal identifiable information (PII)!**
+
+Before publishing or committing this skill, verify:
+- [ ] No real names (use fake names like "张小明" or "Alex Chen")
+- [ ] No Feishu Open IDs (use `ou_1234567890abcdef1234567890abcdef` instead)
+- [ ] No email addresses (use `user@example.com` instead)
+- [ ] No phone numbers (use `+86 138 1234 5678` instead)
+- [ ] No personal file paths (use `/home/user/` instead)
+- [ ] No API keys, tokens, or credentials
+- [ ] No internal hostnames or IP addresses
+
+If you find any PII, replace it with realistic fake data BEFORE continuing.
+
+---
+
+## Overview
+
+[TODO: 1-2 sentences explaining what this skill enables]
+
+## When to Use This Skill
+
+[TODO: List specific scenarios when this skill should be activated]
+
+## How to Use This Skill
+
+[TODO: Step-by-step instructions for using the skill]
+
+## Resources (Optional)
+
+[Only include this section if you need additional resources]
+
+### references/
+[Documentation that should be loaded into context as needed]
+
+### scripts/
+[Executable code for repetitive tasks]
+
+### assets/
+[Files used in output (templates, images, etc.)]
 ```
 
-The script:
+### Step 3: Customize the Template
 
-- Creates the skill directory at the specified path
-- Generates a SKILL.md template with proper frontmatter and TODO placeholders
-- Optionally creates resource directories based on `--resources`
-- Optionally adds example files when `--examples` is set
+Fill in all the `[TODO]` sections:
 
-After initialization, customize the SKILL.md and add resources as needed. If you used `--examples`, replace or delete placeholder files.
+1. **Name**: Already set from the directory name
+2. **Description**: Write a clear, comprehensive description including:
+   - What the skill does
+   - When to use it (specific triggers/scenarios)
+   - Any important context
+3. **Overview**: 1-2 sentences explaining what the skill enables
+4. **When to Use**: List specific scenarios
+5. **How to Use**: Step-by-step instructions
 
-### Step 4: Edit the Skill
+### Step 4: Add Resource Directories (If Needed)
 
-When editing the (newly-generated or existing) skill, remember that the skill is being created for another instance of Codex to use. Include information that would be beneficial and non-obvious to Codex. Consider what procedural knowledge, domain-specific details, or reusable assets would help another Codex instance execute these tasks more effectively.
-
-#### Learn Proven Design Patterns
-
-Consult these helpful guides based on your skill's needs:
-
-- **Multi-step processes**: See references/workflows.md for sequential workflows and conditional logic
-- **Specific output formats or quality standards**: See references/output-patterns.md for template and example patterns
-
-These files contain established best practices for effective skill design.
-
-#### Start with Reusable Skill Contents
-
-To begin implementation, start with the reusable resources identified above: `scripts/`, `references/`, and `assets/` files. Note that this step may require user input. For example, when implementing a `brand-guidelines` skill, the user may need to provide brand assets or templates to store in `assets/`, or documentation to store in `references/`.
-
-Added scripts must be tested by actually running them to ensure there are no bugs and that the output matches what is expected. If there are many similar scripts, only a representative sample needs to be tested to ensure confidence that they all work while balancing time to completion.
-
-If you used `--examples`, delete any placeholder files that are not needed for the skill. Only create resource directories that are actually required.
-
-#### Update SKILL.md
-
-**Writing Guidelines:** Always use imperative/infinitive form.
-
-##### Frontmatter
-
-Write the YAML frontmatter with `name` and `description`:
-
-- `name`: The skill name
-- `description`: This is the primary triggering mechanism for your skill, and helps Codex understand when to use the skill.
-  - Include both what the Skill does and specific triggers/contexts for when to use it.
-  - Include all "when to use" information here - Not in the body. The body is only loaded after triggering, so "When to Use This Skill" sections in the body are not helpful to Codex.
-  - Example description for a `docx` skill: "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. Use when Codex needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
-
-Do not include any other fields in YAML frontmatter.
-
-##### Body
-
-Write instructions for using the skill and its bundled resources.
-
-### Step 5: Packaging a Skill
-
-Once development of the skill is complete, it must be packaged into a distributable .skill file that gets shared with the user. The packaging process automatically validates the skill first to ensure it meets all requirements:
+Only create resource directories that are actually required:
 
 ```bash
-scripts/package_skill.py <path/to/skill-folder>
+# Create references directory if needed
+mkdir references
+
+# Create scripts directory if needed
+mkdir scripts
+
+# Create assets directory if needed
+mkdir assets
 ```
 
-Optional output directory specification:
+### Step 5: Validate the Skill
 
-```bash
-scripts/package_skill.py <path/to/skill-folder> ./dist
-```
+Before publishing, verify:
 
-The packaging script will:
+- [ ] SKILL.md has valid YAML frontmatter with `name` and `description`
+- [ ] Description is clear and comprehensive
+- [ ] No PII (names, IDs, emails, phone numbers, etc.)
+- [ ] Skill directory name follows conventions
+- [ ] No extraneous files (README.md, etc.)
+- [ ] All resources are properly referenced from SKILL.md
 
-1. **Validate** the skill automatically, checking:
-   - YAML frontmatter format and required fields
-   - Skill naming conventions and directory structure
-   - Description completeness and quality
-   - File organization and resource references
-
-2. **Package** the skill if validation passes, creating a .skill file named after the skill (e.g., `my-skill.skill`) that includes all files and maintains the proper directory structure for distribution. The .skill file is a zip file with a .skill extension.
-
-   Security restriction: symlinks are rejected and packaging fails when any symlink is present.
-
-If validation fails, the script will report the errors and exit without creating a package. Fix any validation errors and run the packaging command again.
-
-### Step 6: Iterate
-
-After testing the skill, users may request improvements. Often this happens right after using the skill, with fresh context of how the skill performed.
-
-**Iteration workflow:**
-
-1. Use the skill on real tasks
-2. Notice struggles or inefficiencies
-3. Identify how SKILL.md or bundled resources should be updated
-4. Implement changes and test again
+### Step 6: Iterate and
