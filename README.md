@@ -4,7 +4,9 @@ My personal OpenClaw skills collection.
 
 ## Skills Included
 
+- **agent-builder** - Build high-performing OpenClaw agents end-to-end
 - **ai-content-extraction** - AI-assisted content extraction from diverse sources
+- **backup** - Backup skills (feishu-user-management, feishu-user-report)
 - **clawlist** - Systematic workflow for planning, executing, and tracking tasks
 - **clean-code** - Pragmatic coding standards and best practices
 - **command-center** - Mission control dashboard for OpenClaw
@@ -22,6 +24,8 @@ My personal OpenClaw skills collection.
 - **skill-evaluator** - Evaluate Clawdbot skills for quality and reliability
 - **skills-search** - Search skills.sh registry from CLI
 
+**Total: 20 skills**
+
 ## Installation
 
 Clone this repository into your OpenClaw skills directory or use ClawHub to install.
@@ -29,3 +33,6 @@ Clone this repository into your OpenClaw skills directory or use ClawHub to inst
 ## About
 
 These are my personal skills for OpenClaw, customized for my workflow and preferences.
+
+**Repository**: https://github.com/patrick-yingxi-pan/openclaw-skills  
+**Location**: `/home/patrick/openclaw-skills`
