@@ -1,0 +1,34 @@
+# Systemd Timer Template
+# Copy this to /etc/systemd/system/your-name.timer
+# Replace placeholders with your actual values
+
+[Unit]
+Description=Your Task Timer Description Here
+Documentation=https://docs.your-project.com
+
+[Timer]
+# Scheduling Examples:
+#   Hourly: OnCalendar=*:00
+#   Daily at 2 AM: OnCalendar=02:00
+#   Every Monday at 3 AM: OnCalendar=Mon 03:00
+#   Every 15 minutes: OnCalendar=*:0/15
+#   Every weekday at 8:30 AM: OnCalendar=Mon..Fri 08:30
+#   Multiple times: OnCalendar=02:00, OnCalendar=14:00
+
+OnCalendar=02:00
+
+# ⭐ Persistent = catch up missed tasks on boot
+# Set to true if you want tasks to run immediately on boot
+# if the system was off during the scheduled time
+Persistent=true
+
+# ⭐ Randomized delay = be polite to APIs/websites
+# Adds random delay (0-300 seconds) to prevent thundering herd
+RandomizedDelaySec=300
+
+# Accuracy = how precise the timer needs to be
+# Default is 1 minute, which is fine for most tasks
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

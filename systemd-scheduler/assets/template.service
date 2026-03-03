@@ -1,0 +1,61 @@
+# Systemd Service Template
+# Copy this to /etc/systemd/system/your-name.service
+# Replace placeholders with your actual values
+
+[Unit]
+Description=Your Task Description Here
+Documentation=https://docs.your-project.com
+After=network.target
+# If you need PostgreSQL/MariaDB:
+# After=network.target postgresql.service
+# Wants=postgresql.service
+# If you need specific mount points:
+# RequiresMountsFor=/path/to/your/data
+
+[Service]
+Type=oneshot
+User=your-user
+Group=your-group
+WorkingDirectory=/path/to/your/project
+
+# Environment (optional)
+# Environment="NODE_ENV=production"
+# Environment="DATABASE_URL=postgresql://user:pass@localhost:5432/db"
+
+# Executable
+ExecStart=/usr/bin/node /path/to/your/script.js
+# Optional: Post-execution hook
+# ExecStartPost=/path/to/post-script.sh
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=your-project-name
+
+# Resource Limits (optional)
+# Nice=10
+# IOSchedulingClass=idle
+# CPUWeight=50
+# MemoryMax=256M
+
+# Security Sandboxing (recommended)
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=read-only
+# Allow writing to specific paths
+ReadWritePaths=/path/to/your/project/data
+ReadWritePaths=/path/to/your/project/logs
+# More security (optional)
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
