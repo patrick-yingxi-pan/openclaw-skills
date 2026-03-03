@@ -1,6 +1,6 @@
 ---
 name: systemd-scheduler
-description: Set up and manage persistent, reliable task scheduling on Linux using systemd timers. Features missed-task catch-up, structured logging, dependency management, and security sandboxing. Superior to cron for production workloads.
+description: Set up and manage persistent, reliable task scheduling on Linux using systemd timers. Use when you need missed-task catch-up, structured logging with journalctl, dependency management, and security sandboxing. Superior to cron for production workloads.
 ---
 
 # Systemd Scheduler Skill

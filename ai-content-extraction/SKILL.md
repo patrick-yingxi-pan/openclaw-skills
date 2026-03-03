@@ -300,9 +300,9 @@ For AI content extraction systems:
 5. **Crawl Etiquette** - Are robots.txt and rate limits respected?
 6. **Quality Checks** - Is there confidence scoring or validation?
 
-## Example: Tina Design Platform Content Extraction
+## Example: Interior Design Content Extraction
 
-A real-world production example from Tina Design Platform (interior design case collection):
+A real-world production example from an interior design case collection platform:
 
 ### Project Overview
 - **Sources**: Web pages, design portfolios, image galleries, interior design websites
@@ -311,7 +311,7 @@ A real-world production example from Tina Design Platform (interior design case 
 - **Validation**: Schema validation with Zod
 - **Quality**: Confidence scoring on extracted fields
 
-### Key Learnings from Tina Design Platform
+### Key Learnings
 
 #### 1. Hybrid Extraction is King
 - **Traditional first**: Fast, low-resource (axios/cheerio)
@@ -344,7 +344,7 @@ Website → Case → MediaFile
       Task (tracking, checkpoints)
 ```
 
-### Tina Design Platform Tech Stack
+### Production Tech Stack
 - **Frontend**: Next.js 16 + TypeScript + Tailwind CSS
 - **Database**: PostgreSQL with Prisma ORM
 - **AI/LLM**: OpenAI API integration
