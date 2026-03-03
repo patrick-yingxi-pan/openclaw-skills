@@ -27,11 +27,17 @@ When one method fails, try the next one in sequence.
 
 | Source Type | Tools/Methods |
 |-------------|---------------|
-| **Web Pages** | Playwright, Cheerio, Puppeteer, crawlee |
+| **Web Pages** | Playwright, Cheerio, Puppeteer, crawlee, **OpenClaw browser tool** |
 | **PDFs** | pdfplumber, PyPDF2, pdf.js |
 | **Images** | Vision LLMs (GPT-4V, Claude 3), OCR (Tesseract) |
 | **Documents** | docx, unstructured, llama-index |
 | **Structured** | CSV, JSON, XML parsers |
+
+**⭐ OpenClaw Browser Tool Integration:**
+- **What it is**: Built-in browser automation in OpenClaw
+- **Why use it**: No extra dependencies, integrates with your existing workflow
+- **Capabilities**: Open URLs, take snapshots, execute JavaScript, screenshots, interactive actions
+- **See Also**: `systemd-scheduler` skill for persistent scheduling of extraction tasks
 
 ### 2. Extraction Pipeline
 
@@ -113,6 +119,60 @@ function validateExtractedData(data: unknown, schema: ZodSchema): { valid: boole
 - **Extractor**: AI-powered content extraction
 - **Store**: Persist results
 - **Deduplicator**: Avoid revisiting URLs
+
+**⭐ Hybrid Extraction Architecture (Recommended):**
+
+```
+┌─────────────────────────────────────────────────────┐
+│           HybridContentExtractor                    │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  ┌──────────────────┐    ┌──────────────────┐   │
+│  │  Traditional     │ →  │  Browser         │   │
+│  │  Extractor       │    │  Extractor       │   │
+│  │  (axios/cheerio) │    │  (OpenClaw)      │   │
+│  └──────────────────┘    └──────────────────┘   │
+│         ↓ (智能降级)                              │
+│  - 先尝试传统方式（快，低资源）                   │
+│  - 失败时自动降级到浏览器（强大，但慢）          │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+**Failure Thresholds (When to Fall Back):**
+- **Image count**: `< minImages` (e.g., 0 or 1 images found)
+- **Content length**: `< minContentLength` (e.g., < 50 characters)
+- **Confidence score**: `< minConfidence` (e.g., < 0.3)
+
+**Example - Hybrid Extractor:**
+```typescript
+interface ExtractionOptions {
+  preferBrowser?: boolean;
+  browserOnly?: boolean;
+  traditionalOnly?: boolean;
+  failureThresholds?: {
+    minImages?: number;
+    minContentLength?: number;
+    minConfidence?: number;
+  };
+}
+
+async function hybridExtract(
+  url: string,
+  options: ExtractionOptions = {}
+) {
+  // Try traditional first
+  if (!options.browserOnly) {
+    const traditionalResult = await tryTraditionalExtraction(url);
+    if (isSatisfactory(traditionalResult, options.failureThresholds)) {
+      return traditionalResult;
+    }
+  }
+  
+  // Fall back to browser
+  return await browserExtraction(url);
+}
+```
 
 **Respectful Crawling:**
 - Obey `robots.txt`
@@ -241,8 +301,61 @@ For AI content extraction systems:
 6. **Quality Checks** - Is there confidence scoring or validation?
 
 ## Example: Tina Design Platform Content Extraction
-- **Sources**: Web pages, design portfolios, image galleries
-- **Extractors**: Web crawler + vision AI for images
-- **Output**: Structured design case metadata
+
+A real-world production example from Tina Design Platform (interior design case collection):
+
+### Project Overview
+- **Sources**: Web pages, design portfolios, image galleries, interior design websites
+- **Extractors**: Hybrid crawler (traditional + browser fallback) + AI-assisted content extraction
+- **Output**: Structured design case metadata (title, description, images, tags, designer, location, etc.)
 - **Validation**: Schema validation with Zod
 - **Quality**: Confidence scoring on extracted fields
+
+### Key Learnings from Tina Design Platform
+
+#### 1. Hybrid Extraction is King
+- **Traditional first**: Fast, low-resource (axios/cheerio)
+- **Browser fallback**: For JavaScript-rendered content, lazy-loaded images, anti-bot sites
+- **Configurable thresholds**: Define when to fall back (image count, content length, confidence)
+
+#### 2. OpenClaw Browser Tool is Powerful
+- No extra dependencies needed
+- Built-in snapshot, screenshot, JavaScript execution
+- Works with existing OpenClaw workflow
+- Perfect for interactive extraction and debugging
+
+#### 3. Persistent Scheduling Matters
+- **System cron**: Simple but no catch-up
+- **PM2**: Good for Node.js but no built-in catch-up
+- **⭐ Systemd timer**: Best for Linux! Built-in catch-up (`Persistent=true`), structured logging, dependency management
+
+#### 4. Task State Machine for Fault Tolerance
+- Track task status: PENDING → RUNNING → COMPLETED/FAILED
+- Checkpointing: Save progress for resumable crawls
+- WAL (Write-Ahead Logging): Critical operations logged first
+- Idempotency: Safe to re-run without duplicates
+
+#### 5. Rich Data Model
+```
+Website → Case → MediaFile
+         ↓
+      CaseTag (style, room type, features)
+         ↓
+      Task (tracking, checkpoints)
+```
+
+### Tina Design Platform Tech Stack
+- **Frontend**: Next.js 16 + TypeScript + Tailwind CSS
+- **Database**: PostgreSQL with Prisma ORM
+- **AI/LLM**: OpenAI API integration
+- **Scheduling**: systemd timers (catch-up enabled!)
+- **Browser**: OpenClaw browser tool integration
+- **Storage**: Local file system with hash-based bucketing
+
+### Scheduled Tasks in Production
+- **02:00 AM**: Website discovery
+- **03:00 AM**: Quality scoring
+- **Every hour**: Website health check
+- **04:00 AM**: Case extraction (hybrid mode)
+
+All with `Persistent=true` in systemd timers to catch up missed tasks if the system reboots!
