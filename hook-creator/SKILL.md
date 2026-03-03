@@ -1,11 +1,23 @@
 ---
 name: hook-creator
-description: "Create or update OpenClaw hooks with proper structure, metadata, and handler implementations. Use when designing new hooks, structuring existing hooks, or packaging hooks for distribution. Follow this skill's guidance to create high-quality, maintainable, and publish-ready hooks. IMPORTANT: ALWAYS check for and remove/replace personal identifiable information (PII) in hook files - names, user IDs, emails, phone numbers, addresses, etc. Use random placeholder data instead of real personal information."
+description: Create or update OpenClaw hooks with proper structure, metadata, and handler implementations. Use when designing new hooks, structuring existing hooks, or packaging hooks for distribution. Follow this skill's guidance to create high-quality, maintainable, and publish-ready hooks. IMPORTANT: ALWAYS check for and remove/replace personal identifiable information (PII) in hook files - names, user IDs, emails, phone numbers, addresses, etc. Use random placeholder data instead of real personal information.
 ---
 
 # Hook Creator
 
 This skill provides guidance for creating effective OpenClaw hooks.
+
+## ⚠️ YAML FRONTMATTER FORMAT - IMPORTANT
+
+**ALWAYS check YAML frontmatter format before creating/committing hooks.**
+
+See [references/yaml-frontmatter-guide.md](references/yaml-frontmatter-guide.md) for:
+- ✅ Correct YAML frontmatter format
+- ❌ Common mistakes to avoid
+- 🛡️ How to prevent format issues
+- 📋 Validation checklist
+
+**Key Rule**: `name` and `description` fields should NOT have quotes!
 
 ## 🚨 PRIVACY PROTECTION - IMPORTANT
 
