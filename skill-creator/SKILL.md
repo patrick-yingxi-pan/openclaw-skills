@@ -9,9 +9,9 @@ This skill provides guidance for creating effective skills.
 
 ## 🚨 PRIVACY PROTECTION - IMPORTANT
 
-**BEFORE creating/committing any skill, ALWAYS use the privacy-protection skill!**
+**BEFORE creating/committing any skill, ALWAYS use a privacy protection skill to remove personal identifiable information!**
 
-See the [privacy-protection skill](../privacy-protection/SKILL.md) for:
+A privacy protection skill should provide:
 - Complete PII detection checklist
 - PII detection patterns and automation scripts
 - Fake data templates
@@ -20,11 +20,13 @@ See the [privacy-protection skill](../privacy-protection/SKILL.md) for:
 
 **Never include personal identifiable information (PII) in skill files.**
 
+**Warn the user when no privacy protection skill exists or is not available.**
+
 ---
 
 ## About Skills
 
-Skills are modular, self-contained packages that extend Codex's capabilities by providing specialized knowledge, workflows, and tools.
+Skills are modular, self-contained packages that extend OpenClaw's capabilities by providing specialized knowledge, workflows, and tools.
 
 ### What Skills Provide
 
@@ -62,7 +64,7 @@ skill-name/
 ## Core Principles
 
 ### Concise is Key
-The context window is a public good. Only add context Codex doesn't already have. Prefer concise examples over verbose explanations.
+The context window is a public good. Only add context OpenClaw doesn't already have. Prefer concise examples over verbose explanations.
 
 ### Set Appropriate Degrees of Freedom
 - **High freedom**: Text-based instructions for flexible tasks

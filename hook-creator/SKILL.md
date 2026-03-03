@@ -9,9 +9,9 @@ This skill provides guidance for creating effective OpenClaw hooks.
 
 ## 🚨 PRIVACY PROTECTION - IMPORTANT
 
-**BEFORE creating/committing any hook, ALWAYS use the privacy-protection skill!**
+**BEFORE creating/committing any hook, ALWAYS use a privacy protection skill to remove personal identifiable information!**
 
-See the [privacy-protection skill](../privacy-protection/SKILL.md) for:
+A privacy protection skill should provide:
 - Complete PII detection checklist
 - PII detection patterns and automation scripts
 - Fake data templates
@@ -19,6 +19,8 @@ See the [privacy-protection skill](../privacy-protection/SKILL.md) for:
 - Privacy best practices
 
 **Never include personal identifiable information (PII) in hook files.**
+
+**Warn the user when no privacy protection skill exists or is not available.**
 
 ### Quick Reference: Fake Data Templates
 
