@@ -1,6 +1,6 @@
 ---
 name: hook-creator
-description: "Create or update OpenClaw hooks with proper structure, metadata, and handler implementations. Use when designing new hooks, structuring existing hooks, or packaging hooks for distribution. Follow this skill's guidance to create high-quality, maintainable, and publish-ready hooks. IMPORTANT: ALWAYS check for and remove/replace personal identifiable information (PII) in hook files - names, user IDs, emails, phone numbers, addresses, etc. Use random placeholder data instead of real personal information."
+description: Create or update OpenClaw hooks with proper structure, metadata, and handler implementations. Use when designing new hooks, structuring existing hooks, or packaging hooks for distribution. Follow this skill's guidance to create high-quality, maintainable, and publish-ready hooks.
 ---
 
 # Hook Creator
@@ -9,26 +9,16 @@ This skill provides guidance for creating effective OpenClaw hooks.
 
 ## 🚨 PRIVACY PROTECTION - IMPORTANT
 
-**NEVER include personal identifiable information (PII) in hook files.**
+**BEFORE creating/committing any hook, ALWAYS use the privacy-protection skill!**
 
-### PII Check Checklist
+See the [privacy-protection skill](../privacy-protection/SKILL.md) for:
+- Complete PII detection checklist
+- PII detection patterns and automation scripts
+- Fake data templates
+- Git pre-commit hooks
+- Privacy best practices
 
-**BEFORE creating/committing any hook, ALWAYS go through this checklist:**
-
-- [ ] Scan for Feishu Open IDs (pattern: `ou_` followed by 32 hex characters)
-  - Replace with: `ou_1234567890abcdef1234567890abcdef`
-- [ ] Scan for email addresses (pattern: `*@*.*`)
-  - Replace with: `user@example.com`
-- [ ] Scan for phone numbers (pattern: `+86` or `13x`/`15x`/`17x`/`18x` followed by 9 digits)
-  - Replace with: `+86 138 1234 5678`
-- [ ] Scan for Chinese names (2-4 Chinese characters)
-  - Replace with: `张小明` or `Alex Chen`
-- [ ] Scan for personal file paths (pattern: `/home/patrick/` or similar)
-  - Replace with: `/home/user/`
-- [ ] Scan for API keys, tokens, credentials
-  - Replace with placeholder comments or remove entirely
-- [ ] Scan for internal hostnames, IP addresses
-  - Replace with generic placeholders or remove
+**Never include personal identifiable information (PII) in hook files.**
 
 ### Quick Reference: Fake Data Templates
 
