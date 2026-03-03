@@ -2,9 +2,39 @@
 
 Comprehensive regex patterns and detection strategies for personal identifiable information.
 
-## Regex Patterns
+## Universal PII Regex Patterns (Based on NIST and industry standards)
+
+Use these universal regular expressions to detect PII:
 
 ### Personal Identifiers
+- **Feishu Open ID**: `\bou_[0-9a-f]{32}\b`
+- **Email Address**: `\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b`
+- **Phone Number (US)**: `\b(?:\+1|1)?[-.\s]?\(?[2-9]\d{2}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b`
+- **Phone Number (Chinese)**: `\b\+86[ -]?1[3-9][0-9]{9}\b`
+- **Social Security Number (US)**: `\b(?!000|666|9\d{2})([0-8]\d{2}|7([0-6]\d|7[012]))([-]?)\d{2}\3\d{4}\b`
+
+### Financial & Account Information
+- **Credit Card Number**: `\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})\b`
+- **IP Address (IPv4)**: `\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b`
+
+### Personal Information
+- **Full Name (English)**: `\b([A-Z][a-z]+)\s([A-Z][a-z]+)(?:\s([A-Z][a-z]+))?\b`
+- **Date of Birth (various formats)**: `\b(0[1-9]|1[0-2])[-/]\d{2}\b|\b(19|20)\d{2}[-/]\b`
+- **Street Address (US)**: `\d{1,5}\s\w.\s(\b\w*\b\s){1,2}\w*.?\b`
+- **Passport Number (US)**: `\b[A-Z]{1,2}[0-9]{6,9}\b`
+- **Driver's License Number (generic format)**: `\b[A-Z]{1,2}[-\s]?\d{3,7}[-\s]?\d{3,7}\b`
+
+### Location & Network
+- **MAC Address**: `\b(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b`
+- **Hostname**: `\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}\b`
+
+**Note**: Regex patterns can produce false positives. Always combine with manual review.
+
+---
+
+## Legacy Patterns (Kept for Reference)
+
+### Personal Identifiers (Legacy)
 
 ```python
 # Feishu Open IDs (32 hex chars after 'ou_')
@@ -21,7 +51,7 @@ PATTERN_PHONE_CN = r'\+86\s*1[3-9]\d{9}'
 PATTERN_PHONE_CN_SIMPLE = r'1[3-9]\d{9}'
 ```
 
-### Personal Information
+### Personal Information (Legacy)
 
 ```python
 # Chinese names (2-4 characters)
@@ -35,7 +65,7 @@ PATTERN_HOME_PATH = r'/home/[^/]+/'
 PATTERN_HOME_PATH_MAC = r'/Users/[^/]+/'
 ```
 
-### Network & Security
+### Network & Security (Legacy)
 
 ```python
 # IP addresses (IPv4)
@@ -50,7 +80,7 @@ PATTERN_BEARER_TOKEN = r'Bearer\s+[a-zA-Z0-9_-]{32,}'
 PATTERN_DB_URL = r'(?:postgresql|mysql|mongodb)://[a-zA-Z0-9_-]+:[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+/[a-zA-Z0-9_-]+'
 ```
 
-### Internal Information
+### Internal Information (Legacy)
 
 ```python
 # Internal hostnames

@@ -69,45 +69,45 @@ Essential guidance for detecting and removing personal identifiable information 
 
 | Type | Real Example | Fake Replacement |
 |------|--------------|-----------------|
-| Feishu ID | `ou_7c26f0e19219253829283b20e23a0a45` | `ou_1234567890abcdef1234567890abcdef` |
+| Feishu ID | `ou_1234567890abcdef1234567890abcdef` (example only) | `ou_1234567890abcdef1234567890abcdef` |
 | User ID | `user_abc123def456` | `user_1234567890abcdef` |
-| Name (Chinese) | 赵玉鹏 / Patrick Pan | 张小明 / Alex Chen |
-| Name (English) | John Smith | John Doe |
-| Email | patrick@example.com | user@example.com |
-| Phone | +86 138 0000 0000 | +86 138 1234 5678 |
-| Path | /home/patrick/ | /home/user/ |
-| API Key | sk_live_abc123def456 | `[REDACTED]` or remove |
+| Name (Chinese) | 李小明 | 张小明 |
+| Name (English) | John Doe | Alex Chen |
+| Email | user@real-company.com | user@example.com |
+| Phone | +86 138 8888 8888 | +86 138 1234 5678 |
+| Path | /home/username/ | /home/user/ |
+| API Key | `sk-abc123def456abc123def456` | `[REDACTED]` or remove |
 | Database URL | postgresql://user:pass@localhost/db | postgresql://user:password@localhost/database |
 
 ---
 
-## Automated Detection Patterns
+## Universal PII Regex Patterns (Based on NIST and industry standards)
 
-### Regular Expressions for Common PII
+Use these universal regular expressions to detect PII:
 
-Use these regex patterns to scan for PII:
+### Personal Identifiers
+- **Feishu Open ID**: `\bou_[0-9a-f]{32}\b`
+- **Email Address**: `\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b`
+- **Phone Number (US)**: `\b(?:\+1|1)?[-.\s]?\(?[2-9]\d{2}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b`
+- **Phone Number (Chinese)**: `\b\+86[ -]?1[3-9][0-9]{9}\b`
+- **Social Security Number (US)**: `\b(?!000|666|9\d{2})([0-8]\d{2}|7([0-6]\d|7[012]))([-]?)\d{2}\3\d{4}\b`
 
-```python
-# Feishu Open IDs
-r'ou_[0-9a-f]{32}'
+### Financial & Account Information
+- **Credit Card Number**: `\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})\b`
+- **IP Address (IPv4)**: `\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b`
 
-# Email addresses
-r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+### Personal Information
+- **Full Name (English)**: `\b([A-Z][a-z]+)\s([A-Z][a-z]+)(?:\s([A-Z][a-z]+))?\b`
+- **Date of Birth (various formats)**: `\b(0[1-9]|1[0-2])[-/]\d{2}\b|\b(19|20)\d{2}[-/]\b`
+- **Street Address (US)**: `\d{1,5}\s\w.\s(\b\w*\b\s){1,2}\w*.?\b`
+- **Passport Number (US)**: `\b[A-Z]{1,2}[0-9]{6,9}\b`
+- **Driver's License Number (generic format)**: `\b[A-Z]{1,2}[-\s]?\d{3,7}[-\s]?\d{3,7}\b`
 
-# Phone numbers (Chinese)
-r'\+86\s*1[3-9]\d{9}'
-r'1[3-9]\d{9}'
+### Location & Network
+- **MAC Address**: `\b(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b`
+- **Hostname**: `\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}\b`
 
-# Chinese names (simplified)
-r'[\u4e00-\u9fa5]{2,4}'
-
-# File paths (home directories)
-r'/home/[^/]+/'
-r'/Users/[^/]+/'
-
-# IP addresses
-r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
-```
+**Note**: Regex patterns can produce false positives. Always combine with manual review.
 
 ---
 
