@@ -1,14 +1,14 @@
 ---
 name: feishu-channel
 description: |
-  Complete Feishu channel management including user preferences, session startup, and delayed reporting. Activate when user mentions Feishu, user preferences, session startup, onboarding, or delayed reporting.
-version: 1.0
-lastUpdated: 2026-03-02
+  Complete Feishu channel management including user preferences, session startup, delayed reporting, and official OpenClaw Feishu bot setup guide. Activate when the channel for current session is Feishu or when setting up Feishu integration.
+version: 2.0
+lastUpdated: 2026-03-05
 ---
 
 # Feishu Channel Skill
 
-Unified skill for Feishu channel management including user preferences, session startup, and delayed reporting.
+Unified skill for Feishu channel management including user preferences, session startup, delayed reporting, and complete official setup guide.
 
 ## Overview
 
@@ -17,10 +17,195 @@ This skill provides complete Feishu channel functionality:
 - Session startup automation
 - New user onboarding
 - Delayed reporting to specific users
+- **Complete official OpenClaw Feishu bot setup guide** (new in v2.0)
 
 ---
 
-## Part 1: Feishu User Management
+## Part 1: Official Feishu Bot Setup (New!)
+
+### Quick Start - Two Methods
+
+#### Method 1: Onboarding Wizard (Recommended)
+
+If you just installed OpenClaw, run the wizard:
+```bash
+openclaw onboard
+```
+
+The wizard guides you through:
+1. Creating a Feishu app and collecting credentials
+2. Configuring app credentials in OpenClaw
+3. Starting the gateway
+
+✅ **After configuration**, check gateway status:
+- `openclaw gateway status`
+- `openclaw logs --follow`
+
+#### Method 2: CLI Setup
+
+If you already completed initial install, add the channel via CLI:
+```bash
+openclaw channels add
+```
+
+Choose **Feishu**, then enter the App ID and App Secret.
+
+✅ **After configuration**, manage the gateway:
+- `openclaw gateway status`
+- `openclaw gateway restart`
+- `openclaw logs --follow`
+
+---
+
+## Step-by-Step Setup Guide
+
+### Step 1: Create a Feishu App
+
+#### 1. Open Feishu Open Platform
+Visit [Feishu Open Platform](https://open.feishu.cn/app) and sign in.
+
+Lark (global) tenants should use [https://open.larksuite.com/app](https://open.larksuite.com/app) and set `domain: "lark"` in the Feishu config.
+
+#### 2. Create an App
+1. Click **Create enterprise app**
+2. Fill in the app name + description
+3. Choose an app icon
+
+#### 3. Copy Credentials
+From **Credentials & Basic Info**, copy:
+- **App ID** (format: `cli_xxx`)
+- **App Secret**
+
+❗ **Important:** keep the App Secret private.
+
+#### 4. Configure Permissions
+On **Permissions**, click **Batch import** and paste:
+```json
+{
+  "scopes": {
+    "tenant": [
+      "aily:file:read",
+      "aily:file:write",
+      "application:application.app_message_stats.overview:readonly",
+      "application:application:self_manage",
+      "application:bot.menu:write",
+      "cardkit:card:read",
+      "cardkit:card:write",
+      "contact:user.employee_id:readonly",
+      "corehr:file:download",
+      "event:ip_list",
+      "im:chat.access_event.bot_p2p_chat:read",
+      "im:chat.members:bot_access",
+      "im:message",
+      "im:message.group_at_msg:readonly",
+      "im:message.p2p_msg:readonly",
+      "im:message:readonly",
+      "im:message:send_as_bot",
+      "im:resource"
+    ],
+    "user": ["aily:file:read", "aily:file:write", "im:chat.access_event.bot_p2p_chat:read"]
+  }
+}
+```
+
+#### 5. Enable Bot Capability
+In **App Capability** > **Bot**:
+1. Enable bot capability
+2. Set the bot name
+
+#### 6. Configure Event Subscription
+⚠️ **Important:** before setting event subscription, make sure:
+1. You already ran `openclaw channels add` for Feishu
+2. The gateway is running (`openclaw gateway status`)
+
+In **Event Subscription**:
+1. Choose **Use long connection to receive events** (WebSocket)
+2. Add the event: `im.message.receive_v1`
+
+⚠️ If the gateway is not running, the long-connection setup may fail to save.
+
+#### 7. Publish the App
+1. Create a version in **Version Management & Release**
+2. Submit for review and publish
+3. Wait for admin approval (enterprise apps usually auto-approve)
+
+---
+
+### Step 2: Configure OpenClaw
+
+#### Configure with the wizard (recommended)
+```bash
+openclaw channels add
+```
+
+Choose **Feishu** and paste your App ID + App Secret.
+
+#### Configure via config file
+Edit `~/.openclaw/openclaw.json`:
+```json5
+{
+  channels: {
+    feishu: {
+      enabled: true,
+      dmPolicy: "pairing",
+      accounts: {
+        main: {
+          appId: "cli_xxx",
+          appSecret: "xxx",
+          botName: "My AI assistant",
+        },
+      },
+    },
+  },
+}
+```
+
+#### Lark (global) domain
+If your tenant is on Lark (international), set the domain to `lark`:
+```json5
+{
+  channels: {
+    feishu: {
+      domain: "lark",
+      accounts: {
+        main: {
+          appId: "cli_xxx",
+          appSecret: "xxx",
+        },
+      },
+    },
+  },
+}
+```
+
+#### Quota optimization flags
+You can reduce Feishu API usage with two optional flags:
+- `typingIndicator` (default `true`): when `false`, skip typing reaction calls.
+- `resolveSenderNames` (default `true`): when `false`, skip sender profile lookup calls.
+
+---
+
+### Step 3: Start + Test
+
+#### 1. Start the gateway
+```bash
+openclaw gateway
+```
+
+#### 2. Send a test message
+In Feishu, find your bot and send a message.
+
+#### 3. Approve pairing
+By default, the bot replies with a pairing code. Approve it:
+```bash
+openclaw pairing approve feishu <CODE>
+```
+
+After approval, you can chat normally.
+
+---
+
+## Part 2: Feishu User Management
 
 ### Quick Reference
 
@@ -92,330 +277,86 @@ This skill provides complete Feishu channel functionality:
 }
 ```
 
-#### Error Handling
+---
 
-##### Case 1: Cannot Extract User ID
+## Part 3: Access Control & Configuration
 
-**What to do:**
-1. Check if inbound metadata contains any of the expected fields
-2. Verify field formats are correct
-3. If it appears to be a permission issue:
-   - Inform the user: "I'm having trouble identifying your Feishu user ID. This may be a permission issue."
-   - Instruct: "Please go to the Feishu Open API platform and configure the `contact:user.base` permission for the Feishu channel."
-4. If it's another issue:
-   - Record the error details
-   - Use default configuration
-   - Inform the user you're using default settings
+### Direct Messages
 
-##### Case 2: User File Exists But Format Is Wrong
+- **Default**: `dmPolicy: "pairing"` (unknown users get a pairing code)
+- **Approve pairing**:
+  ```bash
+  openclaw pairing list feishu
+  openclaw pairing approve feishu <CODE>
+  ```
+- **Allowlist mode**: set `channels.feishu.allowFrom` with allowed Open IDs
 
-**What to do:**
-1. Inform the user: "I found your user file, but it seems to have a format issue."
-2. Provide a link to the "User File Format Specification" section
-3. Offer to help fix the format
-4. Temporarily use default configuration while the issue is resolved
+### Group Chats
 
-#### Fallback Strategy
+**1. Group policy** (`channels.feishu.groupPolicy`):
+- `"open"` = allow everyone in groups (default)
+- `"allowlist"` = only allow `groupAllowFrom`
+- `"disabled"` = disable group messages
 
-If user identification fails completely:
-- Use default configuration from `agents.defaults`
-- Record the situation for later debugging
-- Inform the user you're using default settings
-- Try to resolve the issue in the background
+**2. Mention requirement** (`channels.feishu.groups.<chat_id>.requireMention`):
+- `true` = require @mention (default)
+- `false` = respond without mentions
 
-### New User Onboarding Flow
+### Get Group/User IDs
 
-**Use this flow when a new Feishu user is detected (no user file exists):**
+#### Group IDs (chat_id)
+Group IDs look like `oc_xxx`.
 
-#### 1. Greet and Introduce
-- [ ] Greet the user warmly
-- [ ] Briefly explain what this skill does: "I help personalize your experience by remembering your preferences."
-- [ ] Explain the benefits: "This lets me use your preferred name, remember your timezone, and apply your favorite settings automatically."
+**Method 1 (recommended)**
+1. Start the gateway and @mention the bot in the group
+2. Run `openclaw logs --follow` and look for `chat_id`
 
-#### 2. Collect Basic Information
-**Ask ONE question at a time, wait for answer before next question:**
+#### User IDs (open_id)
+User IDs look like `ou_xxx`.
 
-- [ ] **Name:** "What's your name? (Chinese or English is fine)"
-- [ ] **Nickname:** "What would you like me to call you?"
-- [ ] **Timezone:** "My default timezone is GMT+8. Would you like to use a different timezone?" (If yes, ask what timezone)
-- [ ] **Notes:** "Is there anything else you'd like me to remember about you?" (optional)
-
-#### 3. Set Preferences (Optional)
-**Ask about preferences, offer default options:**
-
-- [ ] **Usage Footer:** "Would you like to see usage statistics in responses? Options: off (default) | tokens | full | cost"
-- [ ] **Thinking Level:** "What thinking level would you prefer? Options: off | minimal | low | medium | high (default) | xhigh"
-- [ ] **Reasoning Mode:** "What reasoning mode would you prefer? Options: on | off (default) | stream"
-- [ ] **Custom Preferences:** "Is there anything else you'd like to set as a preference?" (optional)
-
-#### 4. Create User File
-- [ ] Create the user file: `Feishu_USER_&lt;user-id&gt;.md`
-- [ ] Use the standard format (see "User File Format Specification")
-- [ ] Fill in all the information collected
-- [ ] Save to the workspace directory
-
-#### 5. Confirm and Preview
-- [ ] Show the user the file content you created
-- [ ] Ask: "Does this look right? Would you like to change anything?"
-- [ ] If changes needed: Go back to the relevant step and re-collect information
-- [ ] If everything looks good: Continue
-
-#### 6. Complete Onboarding
-- [ ] Confirm: "Great! Your user file has been created."
-- [ ] Explain: "Next time we chat, I'll automatically load your preferences."
-- [ ] Ask: "What would you like to do now?"
-
-### User Preferences Application
-
-**Apply user preferences at session start (only once per session):**
-
-#### 1. Read and Parse User File
-- [ ] Read the `Feishu_USER_&lt;user-id&gt;.md` file
-- [ ] Parse the content to extract preferences
-- [ ] Verify the file format is correct
-
-#### 2. Apply System-Level Preferences
-
-##### Thinking Level
-- [ ] Look for: `**Thinking Level:** &lt;value&gt;`
-- [ ] Valid values: off | minimal | low | medium | high | xhigh
-- [ ] Apply to current session
-- [ ] Default: Use `agents.defaults.thinkingDefault` if not specified
-
-##### Reasoning Mode
-- [ ] Look for: `**Reasoning Mode:** &lt;value&gt;`
-- [ ] Valid values: on | off | stream
-- [ ] Apply to current session
-- [ ] Default: off if not specified
-
-##### Usage Footer
-- [ ] Look for: `**Usage Footer:** &lt;value&gt;`
-- [ ] Valid values: off | tokens | full | cost
-- [ ] Apply to current session
-- [ ] Default: off if not specified
-
-#### 3. Personalize the Experience
-- [ ] Note the user's name and preferred nickname
-- [ ] Use their preferred nickname in the conversation
-- [ ] Consider their timezone when discussing time-related topics
-- [ ] Remember any other personal notes they provided
-
-#### 4. Verify and Document
-- [ ] Confirm preferences have been applied correctly
-- [ ] If any preference fails to apply, provide a clear error message
-- [ ] Record all preference applications for debugging purposes
-- [ ] Note any issues to address later
-
-#### Important Notes
-- Preferences are only applied **once at session start**
-- If the user modifies preferences during the session, changes won't take effect until next session
-- If user file format is invalid, use default configuration
-- Always log preference applications for debugging
-
-### User File Format Specification
-
-#### File Naming
-- **Format:** `Feishu_USER_&lt;feishu-user-id&gt;.md`
-- **Example:** `Feishu_USER_ou_6eae500b759305b553934324445f8895.md`
-- **Location:** Workspace directory
-
-#### File Structure
-```markdown
-# Feishu User: &lt;Name&gt;
-
-## IMPORTANT
-**THIS FILE IS FOR FEISHU USER: &lt;Name&gt;** (Feishu User ID: &lt;user-id&gt;)
-
-## User
-- **Name:** &lt;Name&gt;
-- **Chinese Name:** &lt;Chinese Name&gt; (optional)
-- **English Name:** &lt;English Name&gt; (optional)
-- **What to call them:** &lt;Name&gt; / &lt;Nickname&gt;
-- **Pronouns:** _(optional)_
-- **Timezone:** GMT+8
-- **Notes:** &lt;any notes&gt;
-
-## Preferences
-- **Usage Footer:** off|tokens|full|cost
-- **Thinking Level:** off|minimal|low|medium|high|xhigh
-- **Reasoning Mode:** on|off|stream
-- **&lt;Custom Preference&gt;:** &lt;Value&gt;
-```
-
-#### Complete Example
-```markdown
-# Feishu User: Patrick (夕夕)
-
-## IMPORTANT
-**THIS FILE IS FOR FEISHU USER: Patrick (夕夕)** (Feishu User ID: ou_6eae500b759305b553934324445f8895)
-
-## User
-- **Name:** Patrick
-- **Chinese Name:** 夕夕
-- **What to call them:** Patrick / 夕夕
-- **Pronouns:** _(optional)_
-- **Timezone:** GMT+8
-- **Notes:** Primary user. Set me up with the name Alice.
-
-## Preferences
-- **Usage Footer:** tokens
-- **Thinking Level:** high
-- **Reasoning Mode:** stream
-```
-
-#### Field Descriptions
-
-##### User Section
-| Field | Required | Description |
-|-------|----------|-------------|
-| Name | Yes | User's full name |
-| Chinese Name | No | Chinese name (if applicable) |
-| English Name | No | English name (if applicable) |
-| What to call them | Yes | Preferred nickname(s) |
-| Pronouns | No | Preferred pronouns |
-| Timezone | Yes | User's timezone (default: GMT+8) |
-| Notes | No | Any additional notes |
-
-##### Preferences Section
-| Preference | Values | Default |
-|------------|--------|---------|
-| Usage Footer | off \| tokens \| full \| cost | off |
-| Thinking Level | off \| minimal \| low \| medium \| high \| xhigh | agents.defaults.thinkingDefault |
-| Reasoning Mode | on \| off \| stream | off |
-
-#### Custom Preferences
-You can add any custom preferences by following the same format:
-```markdown
-- **&lt;Preference Name&gt;:** &lt;Preference Value&gt;
-```
-
-Example custom preferences:
-```markdown
-- **Style preferences:** 现代简约，美式复古，侘寂风
-- **Weekly schedule:** Monday: 10 design cases, Friday: 10 product cases
-```
+**Method 1 (recommended)**
+1. Start the gateway and DM the bot
+2. Run `openclaw logs --follow` and look for `open_id`
 
 ---
 
-## Part 2: Feishu User Report
+## Part 4: Common Commands & Troubleshooting
 
-### Core Principle
+### Common Commands
+| Command   | Description       |
+| --------- | ----------------- |
+| `/status` | Show bot status   |
+| `/reset`  | Reset the session |
+| `/model`  | Show/switch model |
 
-When a Feishu user says something like:
+### Gateway Management Commands
+| Command                    | Description                   |
+| -------------------------- | ----------------------------- |
+| `openclaw gateway status`  | Show gateway status           |
+| `openclaw gateway install` | Install/start gateway service |
+| `openclaw gateway stop`    | Stop gateway service          |
+| `openclaw gateway restart` | Restart gateway service       |
+| `openclaw logs --follow`   | Tail gateway logs             |
 
-- "Report back to me later"
-- "Let me know when you have the results"
-- "Come back to me when this is done"
-- "I'll check back later, just let me know"
+### Troubleshooting
 
-**Always**:
+#### Bot does not respond in group chats
+1. Ensure the bot is added to the group
+2. Ensure you @mention the bot (default behavior)
+3. Check `groupPolicy` is not set to `"disabled"`
+4. Check logs: `openclaw logs --follow`
 
-1. Capture and store the user's Feishu user ID (not just their name)
-2. When results are ready, send the report directly to that specific user ID
-3. Do NOT just send to the channel generally - direct message the user
-
-### How to Identify the User
-
-From Feishu channel messages, you will have access to the sender's user ID. Always:
-
-- Store this ID alongside any pending task
-- Use this exact ID when sending the delayed report
-- Never rely solely on user names (they can change or be duplicated)
-
-### Example Workflow
-
-1. User (Feishu ID: `ou_123456789`) says: "Find that document and report back to me later"
-2. You store: `{ task: "find document", userId: "ou_123456789" }`
-3. Later, when you find the document:
-4. Use the message tool with the specific user ID to deliver the result directly
-
-### Important Reminder
-
-Feishu has both group channels and direct messages. When a user asks to "report back later" from a group channel, you still need to send the result to that specific user (via direct message or @mention with user ID), not just post it in the group where it might be missed.
+#### Bot does not receive messages
+1. Ensure the app is published and approved
+2. Ensure event subscription includes `im.message.receive_v1`
+3. Ensure **long connection** is enabled
+4. Ensure app permissions are complete
+5. Ensure the gateway is running: `openclaw gateway status`
+6. Check logs: `openclaw logs --follow`
 
 ---
 
-## FAQ and Troubleshooting
+## References
 
-### Common Issues
-
-#### Q: I can't extract the Feishu user ID
-**A:**
-1. Check if inbound metadata contains `SenderId`, `user_id`, or `chat_id` fields
-2. If it seems like a permission issue, ask the user to configure `contact:user.base` permission in Feishu Open API platform
-3. Use default configuration as fallback
-
-#### Q: User file exists but format is wrong
-**A:**
-1. Inform the user about the format issue
-2. Refer them to the "User File Format Specification" section
-3. Offer to help fix the format
-4. Use default configuration temporarily
-
-#### Q: Preferences aren't being applied
-**A:**
-1. Verify the user file exists and is readable
-2. Check the preference values are valid (see valid values in "User Preferences Application")
-3. Confirm preferences are being applied at session start (not during session)
-4. Check the logs for any error messages
-
-#### Q: How do I manually trigger new user onboarding?
-**A:**
-1. Delete or rename the existing user file
-2. Start a new Feishu session
-3. The onboarding flow will start automatically
-
-#### Q: Can I change preferences during a session?
-**A:**
-1. Yes, you can edit the user file
-2. But changes won't take effect until the next session
-3. Preferences are only applied once at session start
-
-### Debugging Tips
-
-1. **Check the logs:** Look for any error messages related to user identification or preference application
-2. **Verify file permissions:** Ensure user files are readable and writable
-3. **Test with a known good file:** Use the example file from the specification to test
-4. **Start fresh:** If all else fails, delete the user file and go through onboarding again
-
----
-
-## Best Practices
-
-### File Management
-1. **Backup regularly:** Make regular backups of all Feishu user files
-2. **Keep history:** Maintain historical versions for recovery
-3. **Organize neatly:** Keep all user files in the workspace directory
-4. **Secure access:** Protect user files from unauthorized access
-
-### File Editing
-1. **Follow the format:** Always use the standard format when editing user files
-2. **Avoid manual edits:** Prefer the onboarding flow for creating/updating files
-3. **Validate changes:** Check the file format after making changes
-4. **Test:** Verify preferences work after making changes
-
-### Usage Tips
-1. **Document everything:** Keep notes about why preferences were changed
-2. **Communicate changes:** Inform users when their preferences are updated
-3. **Respect privacy:** Don't store sensitive information in user files
-4. **Clean up:** Remove user files for users who are no longer active
-
-### Security and Privacy
-1. **Protect privacy:** User files contain personal information - keep them secure
-2. **No secrets:** Don't store passwords, API keys, or other secrets in user files
-3. **Limit access:** Only give access to user files to those who need it
-4. **Regular audit:** Periodically review user files for sensitive information
-
-### Performance
-1. **Keep files small:** User files should be concise and focused
-2. **Avoid bloat:** Don't store unnecessary information
-3. **Quick access:** Keep files in an easily accessible location
-4. **Cache wisely:** Consider caching user data for better performance
-
----
-
-## Known Feishu Users
-
-| User ID | Name | File |
-|---------|------|------|
-| ou_6eae500b759305b5
+- **[Official Feishu Docs](https://docs.openclaw.ai/channels/feishu)**: Complete official documentation
+- **[Gateway Configuration](https://docs.openclaw.ai/gateway/configuration)**: Full config reference
