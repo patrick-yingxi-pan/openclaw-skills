@@ -11,6 +11,7 @@ metadata:
     - "references/design-patterns.md"
     - "references/architectures.md"
     - "references/security.md"
+    - "references/implementation-patterns.md"
 ---
 
 # Web Crawler Skill
@@ -65,3 +66,4 @@ Citation:
 For detailed design patterns, see [references/design-patterns.md](references/design-patterns.md).
 For architecture information, see [references/architectures.md](references/architectures.md).
 For security considerations, see [references/security.md](references/security.md).
+For implementation patterns and database schemas, see [references/implementation-patterns.md](references/implementation-patterns.md).
