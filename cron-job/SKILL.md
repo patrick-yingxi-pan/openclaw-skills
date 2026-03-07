@@ -90,11 +90,11 @@ openclaw cron remove <job-id>
 ### Hourly Status Check (Feishu)
 ```bash
 openclaw cron add \
-  --name "Caixin Mirror Status" \
+  --name "Website Mirror Status" \
   --cron "0 * * * *" \
   --tz "Asia/Shanghai" \
   --session isolated \
-  --message "Check Caixin Mirror crawl progress and report status." \
+  --message "Check website mirror crawl progress and report status." \
   --announce \
   --channel feishu \
   --to "user:ou_1234567890abcdef"
